@@ -33,6 +33,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.teamcode.Sensors.ColorProgram;
 
 /**
  * This is NOT an opmode.
@@ -58,6 +61,16 @@ public class PushbotHardware
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
+    public DcMotor lift;
+
+    //Sensors
+    public VuforiaBot vuforia;
+
+    //Servos
+    public Servo jewelArm;
+    public Servo s1;
+    public Servo s2;
+
 
     public int vuMarkStatus;
 
@@ -77,9 +90,15 @@ public class PushbotHardware
         frontLeft  = hardwareMap.dcMotor.get("frontLeft");
         backRight  = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
+        lift = hardwareMap.dcMotor.get("lift");
+
+        jewelArm = hardwareMap.servo.get("arm");
+        s1 = hardwareMap.servo.get("s1");
+        s2 = hardwareMap.servo.get("s2");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        s2.setDirection(Servo.Direction.REVERSE);
 
 
 

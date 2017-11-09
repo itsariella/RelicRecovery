@@ -31,13 +31,19 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorBNO055IMU;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
@@ -75,8 +81,8 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="GyroRed Test", group="Pushbot")
-public class GyroRed extends LinearOpMode {
+@Autonomous(name="GyroBlue Test", group="Pushbot")
+public class GyroBlue extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
@@ -344,7 +350,7 @@ public class GyroRed extends LinearOpMode {
 
     public void jewel(){
 
-        if(colorSensor.red() > 30){
+        if(colorSensor.blue() > 30){
             gyroTurn(TURN_SPEED,10);
             gyroHold(TURN_SPEED,10,0.5);
             armUp();
