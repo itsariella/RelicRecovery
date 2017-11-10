@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Pushbot: WFFTeleBot", group="Pushbot")
-public class WFFTeleBot extends OpMode {
+@TeleOp(name="CompetitionBot", group="Pushbot")
+public class CompetitionBot extends OpMode {
 
     // Motors
     public DcMotor frontRight;
@@ -94,8 +94,8 @@ public class WFFTeleBot extends OpMode {
         }
 
         if(gamepad1.left_bumper) {
-                s1.setPosition(.5);
-                s2.setPosition(.7);
+                s1.setPosition(1);
+                s2.setPosition(1);
             }
 
         /*if(grab == 1) {

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.teamcode.Autonomous.GyroBlue;
+import org.firstinspires.ftc.teamcode.teamcode.Autonomous.GyroBlueTeam1;
 import org.firstinspires.ftc.teamcode.teamcode.Sensors.ColorProgram;
 
 /* This program tests autonomous
@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Sensors.ColorProgram;
 
 @Autonomous(name="Encoder Auto", group="Pushbot")
 @Disabled
-public class FTC2018AutoEncoder extends GyroBlue {
+public class FTC2018AutoEncoder extends GyroBlueTeam1 {
 
     // Motors
     public DcMotor frontRight;
