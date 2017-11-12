@@ -166,21 +166,24 @@ public class GyroBlueTeam2 extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
-        //gyroDrive(DRIVE_SPEED, 4.0, 0.0);    // Drive FWD 48 inches
-        //sleep(2000);
+
         armDown();
         sleep(1000);
         jewel();
         sleep(1000);
 
+        gyroDrive(.10,24,0);
+        sleep(500);
+        gyroTurn(TURN_SPEED,-90);
+        gyroHold(TURN_SPEED,-90,.5);
+        sleep(500);
+        gyroDrive(.10,12,90);
+        sleep(500);
+        gyroTurn(TURN_SPEED,0);
+        gyroHold(TURN_SPEED,0,.5);
+        sleep(500);
+        gyroDrive(.10,12,0);
 
-        //gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        //gyroDrive(DRIVE_SPEED, 12.0, -45.0);  // Drive FWD 12 inches at 45 degrees
-        //gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        //gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        //gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        //gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        //gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -344,14 +347,14 @@ public class GyroBlueTeam2 extends LinearOpMode {
 
     public void jewel(){
 
-        if(colorSensor.blue() > 30){
+        if(colorSensor.blue() > colorSensor.red()){
             gyroTurn(TURN_SPEED,10);
             gyroHold(TURN_SPEED,10,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
-        else if(colorSensor.red() > 30){
+        else {
             gyroTurn(TURN_SPEED, -10);
             gyroHold(TURN_SPEED, -10, 0.5);
             armUp();
