@@ -42,6 +42,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorBNO055IMU;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
@@ -83,7 +84,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Gyro Blue 1", group="Pushbot")
-public class GyroBlueTeam1 extends AutoEncoder {
+public class GyroBlueTeam1 extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
@@ -173,28 +174,20 @@ public class GyroBlueTeam1 extends AutoEncoder {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
-        //gyroDrive(DRIVE_SPEED, 4.0, 0.0);    // Drive FWD 48 inches
-        //sleep(2000);
+
+        grab();
+        sleep(500);
+        liftUp();
+        sleep(500);
         armDown();
         sleep(1000);
         jewel();
         sleep(1000);
+        armUp();
         gyroDrive(.10,36,0);
         gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
         gyroDrive(.10,9,90);
-
-
-
-
-
-        //gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        //gyroDrive(DRIVE_SPEED, 12.0, -45.0);  // Drive FWD 12 inches at 45 degrees
-        //gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        //gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        //gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        //gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        //gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -356,21 +349,20 @@ public class GyroBlueTeam1 extends AutoEncoder {
         robot.backRight.setPower(0);
     }
 
-    public void jewel(){
+    public void jewel() {
 
-        if(colorSensor.blue() > 30){
-            gyroTurn(TURN_SPEED,10);
-            gyroHold(TURN_SPEED,10,0.5);
+        if (colorSensor.blue() > colorSensor.red()) {
+            gyroTurn(TURN_SPEED, 10);
+            gyroHold(TURN_SPEED, 10, 0.5);
             armUp();
-            gyroTurn(TURN_SPEED,0);
-            gyroHold(TURN_SPEED,0,1);
-        }
-        else if(colorSensor.red()> 30){
+            gyroTurn(TURN_SPEED, 0);
+            gyroHold(TURN_SPEED, 0, 1);
+        } else {
             gyroTurn(TURN_SPEED, -10);
             gyroHold(TURN_SPEED, -10, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
-            gyroHold(TURN_SPEED,0,1);
+            gyroHold(TURN_SPEED, 0, 1);
         }
     }
 
@@ -379,6 +371,33 @@ public class GyroBlueTeam1 extends AutoEncoder {
     }
     public void armUp(){
         robot.jewelArm.setPosition(.5);
+    }
+    public void grab() {
+        robot.s1.setPosition(0);
+        robot.s2.setPosition(0);
+    }
+    public void liftUp(){
+        robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        robot.lift.setTargetPosition(750); //1120
+
+        //set mode
+        robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        //set power
+        robot.lift.setPower(0.1);
+
+        while(opModeIsActive() && robot.lift.isBusy()){
+            telemetry.addData("Path2",  "Running at %7d", robot.lift.getCurrentPosition());
+            telemetry.update();
+
+            idle();
+        }
+        robot.lift.setPower(0);
+        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
     /**

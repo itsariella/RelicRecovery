@@ -75,7 +75,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-//hi
+
 @Autonomous(name="Gyro Red 2", group="Pushbot")
 public class GyroRedTeam2 extends AutoEncoder {
 
@@ -167,21 +167,31 @@ public class GyroRedTeam2 extends AutoEncoder {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
-        //gyroDrive(DRIVE_SPEED, 4.0, 0.0);    // Drive FWD 48 inches
-        //sleep(2000);
-        armDown();
-        sleep(1000);
-        jewel();
-        sleep(1000);
 
-
-        //gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        //gyroDrive(DRIVE_SPEED, 12.0, -45.0);  // Drive FWD 12 inches at 45 degrees
-        //gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        //gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        //gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        //gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        //gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
+        /*grab();
+        //sleep(500);
+        //liftUp();
+        //sleep(500);
+        //armDown();
+        //sleep(1000);
+        //jewel();
+        //sleep(1000);
+        armUp(); */
+        gyroDrive(.10,-33,0);
+        gyroTurn(TURN_SPEED,-90);
+        gyroHold(TURN_SPEED,-90,.5);
+        gyroDrive(.10,9,-90);
+        /*gyroDrive(.10,-24,0);
+        sleep(500);
+        gyroTurn(TURN_SPEED,90);
+        gyroHold(TURN_SPEED,90,.5);
+        sleep(500);
+        gyroDrive(.10,-12,90);
+        sleep(500);
+        gyroTurn(TURN_SPEED,180);
+        gyroHold(TURN_SPEED,180,.5);
+        sleep(500);
+        gyroDrive(.10,12,180);*/
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -345,14 +355,14 @@ public class GyroRedTeam2 extends AutoEncoder {
 
     public void jewel(){
 
-        if(colorSensor.red() > 30){
+        if(colorSensor.red() > colorSensor.blue()){
             gyroTurn(TURN_SPEED,10);
             gyroHold(TURN_SPEED,10,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
-        else if(colorSensor.blue()> 30){
+        else {
             gyroTurn(TURN_SPEED, -10);
             gyroHold(TURN_SPEED, -10, 0.5);
             armUp();
@@ -367,7 +377,33 @@ public class GyroRedTeam2 extends AutoEncoder {
     public void armUp(){
         robot.jewelArm.setPosition(.5);
     }
+    public void grab() {
+        robot.s1.setPosition(0);
+        robot.s2.setPosition(0);
+    }
+    public void liftUp(){
+        robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        //target position
+        robot.lift.setTargetPosition(750);
+
+        //set mode
+        robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        //set power
+        robot.lift.setPower(0.1);
+
+        while(opModeIsActive() && robot.lift.isBusy()){
+            telemetry.addData("Path2",  "Running at %7d", robot.lift.getCurrentPosition());
+            telemetry.update();
+
+            idle();
+        }
+        robot.lift.setPower(0);
+        robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
     /**
      * Perform one cycle of closed loop heading control.
      *
