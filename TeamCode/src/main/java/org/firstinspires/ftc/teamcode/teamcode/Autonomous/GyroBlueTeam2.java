@@ -84,7 +84,7 @@ public class GyroBlueTeam2 extends LinearOpMode {
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -115,7 +115,7 @@ public class GyroBlueTeam2 extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
-        telemetry.addData(">", "Calibrating GyroBlueTeam1");    //
+        telemetry.addData(">", "Calibrating GyroBlueTeam2");    //
         telemetry.update();
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -172,17 +172,17 @@ public class GyroBlueTeam2 extends LinearOpMode {
         jewel();
         sleep(1000);
 
-        gyroDrive(.10,24,0);
+        gyroDrive(0.10,24,0);
         sleep(500);
         gyroTurn(TURN_SPEED,-90);
         gyroHold(TURN_SPEED,-90,.5);
-        sleep(500);
-        gyroDrive(.10,12,90);
-        sleep(500);
+        sleep(1000);
+        gyroDrive(DRIVE_SPEED,12,90);
+        sleep(1000);
         gyroTurn(TURN_SPEED,0);
         gyroHold(TURN_SPEED,0,.5);
         sleep(500);
-        gyroDrive(.10,12,0);
+        gyroDrive(DRIVE_SPEED,12,0);
 
 
         telemetry.addData("Path", "Complete");
@@ -239,7 +239,7 @@ public class GyroBlueTeam2 extends LinearOpMode {
             robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // start motion.
-            speed = Range.clip(Math.abs(speed), 0.0, 1.0);
+            speed = Range.clip(Math.abs(speed), 0.0, 0.50); //max  used to be 1.0
             robot.frontLeft.setPower(speed);
             robot.frontRight.setPower(speed);
             robot.backLeft.setPower(speed);
@@ -262,7 +262,7 @@ public class GyroBlueTeam2 extends LinearOpMode {
 
                 // Normalize speeds if either one exceeds +/- 1.0;
                 max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-                if (max > 1.0)
+                if (max > 0.50) //used to be 1.0
                 {
                     leftSpeed /= max;
                     rightSpeed /= max;
@@ -368,6 +368,16 @@ public class GyroBlueTeam2 extends LinearOpMode {
     }
     public void armUp(){
         robot.jewelArm.setPosition(.5);
+    }
+
+    public void grab(){
+        robot.s1.setPosition(0);
+        robot.s2.setPosition(0);
+    }
+
+    public void release(){
+        robot.s1.setPosition(1);
+        robot.s2.setPosition(1);
     }
 
     /**

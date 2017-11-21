@@ -85,7 +85,7 @@ public class GyroRedTeam1 extends LinearOpMode {
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -116,7 +116,7 @@ public class GyroRedTeam1 extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
-        telemetry.addData(">", "Calibrating GyroBlueTeam1");    //
+        telemetry.addData(">", "Calibrating GyroRedTeam1");    //
         telemetry.update();
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -368,9 +368,14 @@ public class GyroRedTeam1 extends LinearOpMode {
     public void armUp(){
         robot.jewelArm.setPosition(.5);
     }
-    public void grab() {
+    public void grab(){
         robot.s1.setPosition(0);
         robot.s2.setPosition(0);
+    }
+
+    public void release(){
+        robot.s1.setPosition(1);
+        robot.s2.setPosition(1);
     }
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

@@ -85,7 +85,7 @@ public class GyroRedTeam2 extends AutoEncoder {
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -116,7 +116,7 @@ public class GyroRedTeam2 extends AutoEncoder {
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
-        telemetry.addData(">", "Calibrating GyroBlueTeam1");    //
+        telemetry.addData(">", "Calibrating GyroRedTeam2");    //
         telemetry.update();
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -168,7 +168,7 @@ public class GyroRedTeam2 extends AutoEncoder {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
 
-        /*grab();
+        //grab();
         //sleep(500);
         //liftUp();
         //sleep(500);
@@ -176,22 +176,19 @@ public class GyroRedTeam2 extends AutoEncoder {
         //sleep(1000);
         //jewel();
         //sleep(1000);
-        armUp(); */
-        gyroDrive(.10,-33,0);
-        gyroTurn(TURN_SPEED,-90);
-        gyroHold(TURN_SPEED,-90,.5);
-        gyroDrive(.10,9,-90);
-        /*gyroDrive(.10,-24,0);
+        //armUp();
+        gyroDrive(0.10,-24,0);
         sleep(500);
         gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
-        sleep(500);
-        gyroDrive(.10,-12,90);
-        sleep(500);
+        sleep(1000);
+        gyroDrive(DRIVE_SPEED,-12,90);
+        sleep(1000);
         gyroTurn(TURN_SPEED,180);
         gyroHold(TURN_SPEED,180,.5);
         sleep(500);
-        gyroDrive(.10,12,180);*/
+        gyroDrive(DRIVE_SPEED,12,180);
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -377,9 +374,14 @@ public class GyroRedTeam2 extends AutoEncoder {
     public void armUp(){
         robot.jewelArm.setPosition(.5);
     }
-    public void grab() {
+    public void grab(){
         robot.s1.setPosition(0);
         robot.s2.setPosition(0);
+    }
+
+    public void release(){
+        robot.s1.setPosition(1);
+        robot.s2.setPosition(1);
     }
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
