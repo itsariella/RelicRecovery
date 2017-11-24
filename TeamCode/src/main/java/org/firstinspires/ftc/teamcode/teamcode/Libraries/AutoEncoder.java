@@ -23,6 +23,12 @@ public class AutoEncoder extends LinearOpMode {
     public DcMotor wheelBoxRight;
     public DcMotor getWheelBoxLeft;
 
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+
     //calculations
     double diameterOfWheel = 3.96; //inches
     double circumference = diameterOfWheel * Math.PI;
@@ -66,6 +72,8 @@ public class AutoEncoder extends LinearOpMode {
 
     public void DriveBackwards(double power, int distance ) {
 
+        int movecounts = (int)(distance * COUNTS_PER_INCH);
+
         // reset encoders
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -73,10 +81,10 @@ public class AutoEncoder extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        frontLeft.setTargetPosition(distance);
-        frontRight.setTargetPosition(distance);
-        backRight.setTargetPosition(distance);
-        backLeft.setTargetPosition(distance);
+        frontLeft.setTargetPosition(movecounts);
+        frontRight.setTargetPosition(movecounts);
+        backRight.setTargetPosition(movecounts);
+        backLeft.setTargetPosition(movecounts);
 
         //set mode
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -113,6 +121,8 @@ public class AutoEncoder extends LinearOpMode {
 
         //1240 = 1 rotation
 
+        int movecounts = (int)(distance * COUNTS_PER_INCH);
+
         // reset encoders
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -120,10 +130,10 @@ public class AutoEncoder extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        frontLeft.setTargetPosition(-distance);
-        frontRight.setTargetPosition(-distance);
-        backRight.setTargetPosition(-distance);
-        backLeft.setTargetPosition(-distance);
+        frontLeft.setTargetPosition(-movecounts);
+        frontRight.setTargetPosition(-movecounts);
+        backRight.setTargetPosition(-movecounts);
+        backLeft.setTargetPosition(-movecounts);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);

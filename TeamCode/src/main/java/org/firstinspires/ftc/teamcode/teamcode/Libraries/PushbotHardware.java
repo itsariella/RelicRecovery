@@ -100,6 +100,8 @@ public class PushbotHardware
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         s2.setDirection(Servo.Direction.REVERSE);
 
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
 
         //colorSensor = hardwareMap.colorSensor.get("color");

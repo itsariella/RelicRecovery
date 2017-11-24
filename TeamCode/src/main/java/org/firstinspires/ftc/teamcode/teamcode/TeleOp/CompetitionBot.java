@@ -4,10 +4,11 @@ package org.firstinspires.ftc.teamcode.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Pushbot: WFFTeleBot", group="Pushbot")
-public class WFFTeleBot extends OpMode {
+@TeleOp(name="CompetitionBot", group="Pushbot")
+public class CompetitionBot extends OpMode {
 
     // Motors
     public DcMotor frontRight;
@@ -15,8 +16,13 @@ public class WFFTeleBot extends OpMode {
     public DcMotor backRight;
     public DcMotor backLeft;
     public DcMotor lift;
+    public DcMotor intakeRight;
+    public DcMotor intakeLeft;
+
+
     public Servo s1;
     public Servo s2;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -28,11 +34,17 @@ public class WFFTeleBot extends OpMode {
         backRight = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
         lift = hardwareMap.dcMotor.get("lift");
+        intakeRight = hardwareMap.dcMotor.get("intakeRight");
+        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
+
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
+
+
         s2.setDirection(Servo.Direction.REVERSE);
 
         s1.setPosition(0);
@@ -64,71 +76,69 @@ public class WFFTeleBot extends OpMode {
         float y;
         float z;
         double liftPower;
+        double intakeRightPower;
+        double intakeLeftPower;
 
 
-        if(Math.abs(gamepad1.left_stick_x) > .1)
+        if (Math.abs(gamepad1.left_stick_x) > .1)
             x = gamepad1.left_stick_x;
         else
             x = 0;
 
-        if(Math.abs(gamepad1.left_stick_y) > .1)
+        if (Math.abs(gamepad1.left_stick_y) > .1)
             y = gamepad1.left_stick_y;
         else
             y = 0;
 
-        if(Math.abs(gamepad1.right_stick_x) > .1)
+        if (Math.abs(gamepad1.right_stick_x) > .1)
             z = gamepad1.right_stick_x;
         else
             z = 0;
 
-        if(gamepad1.right_trigger > 0.1)
+        if (gamepad2.right_trigger > 0.1)
             liftPower = gamepad1.right_trigger;
-        else if(gamepad1.left_trigger > 0.1)
+        else if (gamepad2.left_trigger > 0.1)
             liftPower = -gamepad1.left_trigger;
         else
             liftPower = 0;
 
-        if(gamepad1.right_bumper) {
-                s1.setPosition(0);
-                s2.setPosition(0);
-        }
-
-        if(gamepad1.left_bumper) {
-                s1.setPosition(.5);
-                s2.setPosition(.7);
-            }
-
-        /*if(grab == 1) {
+        if (gamepad2.right_bumper) {
             s1.setPosition(0);
             s2.setPosition(0);
         }
-        if(grab == 0){
-            s1.setPosition(.5);
-            s2.setPosition(.7);
+
+        if (gamepad2.left_bumper) {
+            s1.setPosition(1);
+            s2.setPosition(1);
         }
 
-        if(gamepad1.a)
-            if(grab == 0)
-                grab = 1;
-            else if(grab == 1)
-                grab = 0;
+        if (gamepad1.right_trigger > .1) {
+            intakeRightPower = gamepad1.right_trigger;
+        } else if (gamepad1.right_bumper) {
+            intakeRightPower = -0.7;
+        } else {
+            intakeRightPower = 0;
+        }
 
-        if(grab == 0){
-            s1.setPosition(0);
-            s2.setPosition(0);
-        }else if(grab ==1){
-            s1.setPosition(.7);
-            s2.setPosition(.7);
-        } */
-
+        if (gamepad1.left_trigger > .1) {
+            intakeLeftPower = gamepad1.left_trigger;
+        }
+        else if (gamepad1.left_bumper)
+        {
+            intakeLeftPower = -0.7;
+        }
+        else {
+            intakeLeftPower = 0;
+        }
 
         lift.setPower(liftPower);
-        frontRight.setPower((y+x+z)*.4);
-        backRight.setPower((y-x+z)*.4);
-        frontLeft.setPower((y-x-z)*.4);
-        backLeft.setPower((y+x-z)*.4);
-
-    }
+        intakeLeft.setPower(-intakeLeftPower);
+        intakeRight.setPower(-intakeRightPower);
+        frontLeft.setPower(y+x+z); //changed nov 20 from .4 to full speed
+        backLeft.setPower(y-x+z);
+        frontRight.setPower(y-x-z);
+        backRight.setPower(y+x-z);
+}
 
     /*
      * Code to run ONCE after the driver hits STOP

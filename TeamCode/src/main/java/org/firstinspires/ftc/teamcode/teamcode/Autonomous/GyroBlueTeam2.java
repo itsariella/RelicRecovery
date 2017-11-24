@@ -31,25 +31,19 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorBNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
 
 /**
- * This file illustrates the concept of driving a path based on GyroBlue heading and encoder counts.
+ * This file illustrates the concept of driving a path based on GyroBlueTeam1 heading and encoder counts.
  * It uses the common Pushbot hardware class to define the drive on the robot.
  * The code is structured as a LinearOpMode
  *
@@ -64,13 +58,13 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  *
  *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
  *
- *  In order to calibrate the GyroBlue correctly, the robot must remain stationary during calibration.
+ *  In order to calibrate the GyroBlueTeam1 correctly, the robot must remain stationary during calibration.
  *  This is performed when the INIT button is pressed on the Driver Station.
  *  This code assumes that the robot is stationary when the INIT button is pressed.
  *  If this is not the case, then the INIT should be performed again.
  *
  *  Note: in this example, all angles are referenced to the initial coordinate frame set during the
- *  the GyroBlue Calibration process, or whenever the program issues a resetZAxisIntegrator() call on the GyroBlue.
+ *  the GyroBlueTeam1 Calibration process, or whenever the program issues a resetZAxisIntegrator() call on the GyroBlueTeam1.
  *
  *  The angle of movement/rotation is assumed to be a standardized rotation around the robot Z axis,
  *  which means that a Positive rotation is Counter Clock Wise, looking down on the field.
@@ -81,16 +75,16 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="GyroBlue Test", group="Pushbot")
-public class GyroBlue extends LinearOpMode {
+@Autonomous(name="Gyro Blue 2", group="Pushbot")
+public class GyroBlueTeam2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
     PushbotHardware robot   = new PushbotHardware();   // Use a Pushbot's hardware
-    BNO055IMU imu;                   // Additional GyroBlue device
+    BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -121,7 +115,7 @@ public class GyroBlue extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
-        telemetry.addData(">", "Calibrating GyroBlue");    //
+        telemetry.addData(">", "Calibrating GyroBlueTeam2");    //
         telemetry.update();
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -161,7 +155,7 @@ public class GyroBlue extends LinearOpMode {
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
-        // Wait for the game to start (Display GyroBlue value), and reset gyro before we move..
+        // Wait for the game to start (Display GyroBlueTeam1 value), and reset gyro before we move..
         while (!isStarted()) {
             telemetry.addData(">", "Robot Heading = %d", imu.getAngularOrientation());
             telemetry.update();
@@ -172,21 +166,24 @@ public class GyroBlue extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
-        //gyroDrive(DRIVE_SPEED, 4.0, 0.0);    // Drive FWD 48 inches
-        //sleep(2000);
+
         armDown();
         sleep(1000);
         jewel();
         sleep(1000);
 
+        gyroDrive(0.10,24,0);
+        sleep(500);
+        gyroTurn(TURN_SPEED,-90);
+        gyroHold(TURN_SPEED,-90,.5);
+        sleep(1000);
+        gyroDrive(DRIVE_SPEED,12,90);
+        sleep(1000);
+        gyroTurn(TURN_SPEED,0);
+        gyroHold(TURN_SPEED,0,.5);
+        sleep(500);
+        gyroDrive(DRIVE_SPEED,12,0);
 
-        //gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        //gyroDrive(DRIVE_SPEED, 12.0, -45.0);  // Drive FWD 12 inches at 45 degrees
-        //gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        //gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        //gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        //gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        //gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -242,7 +239,7 @@ public class GyroBlue extends LinearOpMode {
             robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // start motion.
-            speed = Range.clip(Math.abs(speed), 0.0, 1.0);
+            speed = Range.clip(Math.abs(speed), 0.0, 0.50); //max  used to be 1.0
             robot.frontLeft.setPower(speed);
             robot.frontRight.setPower(speed);
             robot.backLeft.setPower(speed);
@@ -265,7 +262,7 @@ public class GyroBlue extends LinearOpMode {
 
                 // Normalize speeds if either one exceeds +/- 1.0;
                 max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-                if (max > 1.0)
+                if (max > 0.50) //used to be 1.0
                 {
                     leftSpeed /= max;
                     rightSpeed /= max;
@@ -350,14 +347,14 @@ public class GyroBlue extends LinearOpMode {
 
     public void jewel(){
 
-        if(colorSensor.blue() > 30){
+        if(colorSensor.blue() > colorSensor.red()){
             gyroTurn(TURN_SPEED,10);
             gyroHold(TURN_SPEED,10,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
-        else{
+        else {
             gyroTurn(TURN_SPEED, -10);
             gyroHold(TURN_SPEED, -10, 0.5);
             armUp();
@@ -371,6 +368,16 @@ public class GyroBlue extends LinearOpMode {
     }
     public void armUp(){
         robot.jewelArm.setPosition(.5);
+    }
+
+    public void grab(){
+        robot.s1.setPosition(0);
+        robot.s2.setPosition(0);
+    }
+
+    public void release(){
+        robot.s1.setPosition(1);
+        robot.s2.setPosition(1);
     }
 
     /**
@@ -421,7 +428,7 @@ public class GyroBlue extends LinearOpMode {
 
     /**
      * getError determines the error between the target angle and the robot's current heading
-     * @param   targetAngle  Desired angle (relative to global reference established at last GyroBlue Reset).
+     * @param   targetAngle  Desired angle (relative to global reference established at last GyroBlueTeam1 Reset).
      * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
      *          +ve error means the robot should turn LEFT (CCW) to reduce error.
      */
