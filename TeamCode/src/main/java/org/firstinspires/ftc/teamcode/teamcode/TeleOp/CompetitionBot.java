@@ -40,9 +40,11 @@ public class CompetitionBot extends OpMode {
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
+
+
         s2.setDirection(Servo.Direction.REVERSE);
 
         s1.setPosition(0);
@@ -113,7 +115,7 @@ public class CompetitionBot extends OpMode {
         if (gamepad1.right_trigger > .1) {
             intakeRightPower = gamepad1.right_trigger;
         } else if (gamepad1.right_bumper) {
-            intakeRightPower = -1;
+            intakeRightPower = -0.7;
         } else {
             intakeRightPower = 0;
         }
@@ -123,19 +125,19 @@ public class CompetitionBot extends OpMode {
         }
         else if (gamepad1.left_bumper)
         {
-            intakeLeftPower = -1;
+            intakeLeftPower = -0.7;
         }
         else {
             intakeLeftPower = 0;
         }
 
         lift.setPower(liftPower);
-        intakeLeft.setPower(intakeLeftPower);
-        intakeRight.setPower(intakeRightPower);
-        frontRight.setPower(y+x+z); //changed nov 20 from .4 to full speed
-        backRight.setPower(y-x+z);
-        frontLeft.setPower(y-x-z);
-        backLeft.setPower(y+x-z);
+        intakeLeft.setPower(-intakeLeftPower);
+        intakeRight.setPower(-intakeRightPower);
+        frontLeft.setPower(y+x+z); //changed nov 20 from .4 to full speed
+        backLeft.setPower(y-x+z);
+        frontRight.setPower(y-x-z);
+        backRight.setPower(y+x-z);
 }
 
     /*
