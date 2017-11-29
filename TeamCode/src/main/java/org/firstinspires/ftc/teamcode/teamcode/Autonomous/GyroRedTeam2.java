@@ -369,10 +369,10 @@ public class GyroRedTeam2 extends AutoEncoder {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(.5);
+        robot.jewelArm.setPosition(1);
     }
     public void grab(){
         robot.s1.setPosition(0);

@@ -220,16 +220,11 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     jewel();
                     sleep(1000);
                     armUp();
-                    gyroDrive(.10,-33,0);
+                    gyroDrive(.20,-35,0);
                     gyroTurn(TURN_SPEED,90);
                     gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,10,90);
-                    sleep(500);
+                    gyroDrive(.10,3.5,90);
                     release();
-                    gyroDrive(.10,-5,0);
-                    grab();
-                    sleep(500);
-                    gyroDrive(.10,5,0);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -247,10 +242,11 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     jewel();
                     sleep(1000);
                     armUp();
-                    gyroDrive(.10,28.4,0);
+                    gyroDrive(.20,-42,0);
                     gyroTurn(TURN_SPEED,90);
                     gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,10,90);
+                    gyroDrive(.10,3.5,90);
+                    release();
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -268,10 +264,11 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     jewel();
                     sleep(1000);
                     armUp();
-                    gyroDrive(.10,43.6,0);
+                    gyroDrive(.20,-27,0);
                     gyroTurn(TURN_SPEED,90);
                     gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,10,90);
+                    gyroDrive(.10,3.5,90);
+                    release();
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -290,10 +287,16 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                 jewel();
                 sleep(1000);
                 armUp();
-                gyroDrive(.10,36,0);
+                gyroDrive(DRIVE_SPEED,-33,0);
                 gyroTurn(TURN_SPEED,90);
                 gyroHold(TURN_SPEED,90,.5);
-                gyroDrive(.10,9,90);
+                gyroDrive(DRIVE_SPEED,10,90);
+                sleep(500);
+                release();
+                gyroDrive(DRIVE_SPEED,-5,0);
+                grab();
+                sleep(500);
+                gyroDrive(DRIVE_SPEED,5,0);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();

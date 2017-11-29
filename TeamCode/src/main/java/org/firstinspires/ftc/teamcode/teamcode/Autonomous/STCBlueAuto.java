@@ -26,7 +26,6 @@ public class STCBlueAuto extends AutoEncoder {
         DriveBackwards(.2,3650);
         StopDriving();
         sleep(1000);
-        Intake(.1,7000);
         StopDriving();
         sleep(500);
         DriveForward(.2,560);

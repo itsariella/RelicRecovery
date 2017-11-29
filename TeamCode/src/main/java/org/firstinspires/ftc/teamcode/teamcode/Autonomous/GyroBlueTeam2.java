@@ -171,7 +171,6 @@ public class GyroBlueTeam2 extends LinearOpMode {
         sleep(1000);
         jewel();
         sleep(1000);
-
         gyroDrive(0.10,24,0);
         sleep(500);
         gyroTurn(TURN_SPEED,-90);
@@ -364,10 +363,10 @@ public class GyroBlueTeam2 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(.5);
+        robot.jewelArm.setPosition(1);
     }
 
     public void grab(){

@@ -26,7 +26,6 @@ public class STCRedAuto extends AutoEncoder {
         DriveBackwards(.2,3455);
         StopDriving();
         sleep(1000);
-        Intake(.2,8000);
         StopDriving();
         sleep(500);
         DriveForward(.2,560);
