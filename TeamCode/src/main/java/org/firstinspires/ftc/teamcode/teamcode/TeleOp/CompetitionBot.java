@@ -22,6 +22,7 @@ public class CompetitionBot extends OpMode {
 
     public Servo s1;
     public Servo s2;
+    public Servo arm;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -37,8 +38,10 @@ public class CompetitionBot extends OpMode {
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
 
+
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
+        arm = hardwareMap.servo.get("arm");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
@@ -75,7 +78,7 @@ public class CompetitionBot extends OpMode {
         float x;
         float y;
         float z;
-        double liftPower;
+        double liftPower = 0;
         double intakeRightPower;
         double intakeLeftPower;
 
@@ -95,12 +98,15 @@ public class CompetitionBot extends OpMode {
         else
             z = 0;
 
-        if (gamepad2.right_trigger > 0.1)
+        /*if (gamepad2.right_trigger > 0.1)
             liftPower = gamepad2.right_trigger;
         else if (gamepad2.left_trigger > 0.1)
             liftPower = -gamepad2.left_trigger;
         else
             liftPower = 0;
+         */
+        if (gamepad2.left_stick_y >= 0.1)
+            liftPower = gamepad2.left_stick_y;
 
         if (gamepad2.right_bumper) {
             s1.setPosition(.5);
@@ -131,7 +137,15 @@ public class CompetitionBot extends OpMode {
             intakeLeftPower = 0;
         }
 
-        lift.setPower(liftPower);
+        if(gamepad1.x) {
+            arm.setPosition(1);
+        }
+
+        if(gamepad1.y){
+            arm.setPosition(0);
+        }
+
+        lift.setPower(-liftPower);
         intakeLeft.setPower(-intakeLeftPower);
         intakeRight.setPower(-intakeRightPower);
         frontLeft.setPower(y+x+z); //changed nov 20 from .4 to full speed

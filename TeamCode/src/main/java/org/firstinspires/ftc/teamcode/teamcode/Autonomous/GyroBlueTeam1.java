@@ -160,6 +160,7 @@ public class GyroBlueTeam1 extends LinearOpMode {
         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sleep(100);
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
@@ -182,10 +183,10 @@ public class GyroBlueTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.20,35,0);
+        gyroDrive(.10,35,0);
         gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
-        gyroDrive(.10,8,90);
+        gyroDrive(.10,3.5,90);
         release();
 
 
