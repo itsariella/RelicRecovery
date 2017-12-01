@@ -91,8 +91,8 @@ public class GyroBlueTeam2 extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.1 ;     // Nominal speed for better accuracy.
-    static final double     TURN_SPEED              = 0.3;     // Nominal half speed for better accuracy.
+    static final double     DRIVE_SPEED             = 0.2 ;     // Nominal speed for better accuracy.
+    static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
@@ -153,7 +153,7 @@ public class GyroBlueTeam2 extends LinearOpMode {
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+        //imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
         // Wait for the game to start (Display GyroBlueTeam1 value), and reset gyro before we move..
         while (!isStarted()) {
@@ -168,20 +168,17 @@ public class GyroBlueTeam2 extends LinearOpMode {
         // Put a hold after each turn
 
         armDown();
-        sleep(1000);
+        sleep(500);
         jewel();
         sleep(1000);
         gyroDrive(0.10,24,0);
-        sleep(500);
         gyroTurn(TURN_SPEED,-90);
         gyroHold(TURN_SPEED,-90,.5);
-        sleep(1000);
         gyroDrive(DRIVE_SPEED,12,90);
-        sleep(1000);
         gyroTurn(TURN_SPEED,0);
         gyroHold(TURN_SPEED,0,.5);
-        sleep(500);
         gyroDrive(DRIVE_SPEED,12,0);
+        release();
 
 
         telemetry.addData("Path", "Complete");
@@ -221,7 +218,7 @@ public class GyroBlueTeam2 extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;

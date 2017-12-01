@@ -228,7 +228,7 @@ public class GyroStraight extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;
@@ -281,8 +281,8 @@ public class GyroStraight extends LinearOpMode {
 
                 // Display drive status for the driver.
                 telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
-                telemetry.addData("Target",  "%7d:%7d",      frontLeftTarget,  backLeftTarget, backLeftTarget, backRightTarget);
-                telemetry.addData("Actual",  "%7d:%7d",      robot.frontLeft.getCurrentPosition(),
+                telemetry.addData("Target",  "%7d:%7d:%7d:%7d",      frontLeftTarget,  backLeftTarget, frontRightTarget, backRightTarget);
+                telemetry.addData("Actual",  "%7d:%7d:%7d:%7d",      robot.frontLeft.getCurrentPosition(),
                                                              robot.frontRight.getCurrentPosition(), robot.backLeft.getCurrentPosition(), robot.backRight.getCurrentPosition());
                 telemetry.addData("Speed",   "%5.2f:%5.2f",  leftSpeed, rightSpeed);
                 telemetry.update();

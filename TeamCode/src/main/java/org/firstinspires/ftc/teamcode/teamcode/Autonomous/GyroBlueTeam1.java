@@ -47,7 +47,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import org.firstinspires.ftc.teamcode.teamcode.Libraries.AutoEncoder;
 import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
 
 /**
@@ -170,10 +169,13 @@ public class GyroBlueTeam1 extends LinearOpMode {
             telemetry.update();
         }
 
+        //imu.startAccelerationIntegration(new Position(), new Velocity(), 1000); //used to be commented out
+
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
 
+        sleep(500);
         grab();
         sleep(500);
         liftUp();
@@ -227,7 +229,7 @@ public class GyroBlueTeam1 extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;

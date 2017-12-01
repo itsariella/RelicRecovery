@@ -63,9 +63,6 @@ public class PushbotHardware
     public DcMotor backRight;
     public DcMotor lift;
 
-    //Sensors
-    public VuforiaBot vuforia;
-
     //Servos
     public Servo jewelArm;
     public Servo s1;
@@ -101,8 +98,6 @@ public class PushbotHardware
         s2.setDirection(Servo.Direction.REVERSE);
 
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
 
         //colorSensor = hardwareMap.colorSensor.get("color");
         //centerIR = hardwareMap.digitalChannel.get("centerIR");
