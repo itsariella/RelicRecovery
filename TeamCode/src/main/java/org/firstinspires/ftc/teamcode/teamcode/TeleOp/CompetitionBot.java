@@ -108,12 +108,12 @@ public class CompetitionBot extends OpMode {
         if (gamepad2.left_stick_y >= 0.1)
             liftPower = gamepad2.left_stick_y;
 
-        if (gamepad2.right_bumper) {
+        if (gamepad2.right_trigger >= 0.1) {
             s1.setPosition(.5);
             s2.setPosition(.5);
         }
 
-        if (gamepad2.left_bumper) {
+        if (gamepad2.left_trigger >= 0.1) {
             s1.setPosition(1);
             s2.setPosition(1);
         }

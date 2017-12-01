@@ -475,14 +475,14 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(.5);
+        robot.jewelArm.setPosition(1);
     }
     public void grab() {
-        robot.s1.setPosition(0);
-        robot.s2.setPosition(0);
+        robot.s1.setPosition(0.5);
+        robot.s2.setPosition(0.5);
     }
     public void release(){
         robot.s1.setPosition(1);

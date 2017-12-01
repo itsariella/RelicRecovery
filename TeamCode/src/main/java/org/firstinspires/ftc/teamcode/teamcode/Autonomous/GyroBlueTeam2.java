@@ -367,8 +367,8 @@ public class GyroBlueTeam2 extends LinearOpMode {
     }
 
     public void grab(){
-        robot.s1.setPosition(0);
-        robot.s2.setPosition(0);
+        robot.s1.setPosition(0.5);
+        robot.s2.setPosition(0.5);
     }
 
     public void release(){
