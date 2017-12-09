@@ -1,11 +1,13 @@
 
 package org.firstinspires.ftc.teamcode.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="TwoWheelDrive", group="Pushbot")
+@Disabled
 public class TankDrive2Wheel extends OpMode {
 
     // Motors - temporary positions

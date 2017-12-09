@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -49,9 +50,6 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  *
  * The code REQUIRES that you DO have encoders on the wheels,
  *   otherwise you would use: PushbotAutoDriveByTime;
- *
- *  This code ALSO requires that you have a Modern Robotics I2C gyro with the name "gyro"
- *   otherwise you would use: PushbotAutoDriveByEncoder;
  *
  *  This code requires that the drive Motors have been configured such that a positive
  *  power command moves them forward, and causes the encoders to count UP.
@@ -76,6 +74,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Gyro Blue 1 Flip", group="Pushbot")
+@Disabled
 public class GyroBlueTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -91,7 +90,7 @@ public class GyroBlueTeam1Flip extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.2 ;     // Nominal speed for better accuracy.
+    static final double     DRIVE_SPEED             = 0.1 ;     // Nominal speed for better accuracy.
     static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
@@ -365,6 +364,8 @@ public class GyroBlueTeam1Flip extends LinearOpMode {
     public void armDown(){
         robot.jewelArm2.setPosition(0);
     }
+
+
     public void armUp(){
         robot.jewelArm2.setPosition(1);
     }

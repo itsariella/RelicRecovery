@@ -214,10 +214,10 @@ public class GyroRedTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.20,-42,0);
+        gyroDrive(.20,-36,0);
         gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
-        gyroDrive(.10,3.5,90);
+        gyroDrive(.10,6,90);
         release();
 
 

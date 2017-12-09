@@ -1,6 +1,7 @@
 
 package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import static java.lang.Math.abs;
 
 @TeleOp(name="Pushbot: lift test", group="Pushbot")
+@Disabled
 public class LiftTest extends OpMode {
 
     // Motors - temporary positions

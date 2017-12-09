@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -84,6 +85,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Vuforia Blue 1", group="Pushbot")
+@Disabled
 public class VuforiaBlueTeam1 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -475,14 +477,14 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(0);
-    }
-    public void armUp(){
         robot.jewelArm.setPosition(1);
     }
+    public void armUp(){
+        robot.jewelArm.setPosition(.5);
+    }
     public void grab() {
-        robot.s1.setPosition(0.5);
-        robot.s2.setPosition(0.5);
+        robot.s1.setPosition(0);
+        robot.s2.setPosition(0);
     }
     public void release(){
         robot.s1.setPosition(1);

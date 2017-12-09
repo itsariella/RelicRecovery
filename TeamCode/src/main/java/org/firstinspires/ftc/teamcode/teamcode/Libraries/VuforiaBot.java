@@ -29,6 +29,7 @@
 package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
@@ -66,6 +67,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 @Autonomous(name="Concept: VuMark Id", group ="Concept")
+@Disabled
 public class VuforiaBot extends FTC2018AutoEncoder {
 
     public PushbotHardware hardware;

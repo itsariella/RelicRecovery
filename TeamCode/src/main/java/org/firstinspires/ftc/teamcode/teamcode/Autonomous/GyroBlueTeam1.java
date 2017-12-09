@@ -98,7 +98,7 @@ public class GyroBlueTeam1 extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.2 ;     // Nominal speed for better accuracy.
+    static final double     DRIVE_SPEED             = 0.1 ;     // Nominal speed for better accuracy.
     static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
@@ -128,9 +128,10 @@ public class GyroBlueTeam1 extends LinearOpMode {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.calibrationDataFile = "AdafruitIMUCalibration.json"; // see the calibration sample opmode
         parameters.loggingEnabled      = true;
         parameters.loggingTag          = "IMU";
+
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         parameters.mode = BNO055IMU.SensorMode.IMU;
 
@@ -175,6 +176,7 @@ public class GyroBlueTeam1 extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
 
+
         sleep(500);
         grab();
         sleep(500);
@@ -185,15 +187,17 @@ public class GyroBlueTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.10,35,0);
-        gyroTurn(TURN_SPEED,90);
+        gyroDrive(.10,15,0);
+        encoderDrive(.2,12);
+        /*gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
         gyroDrive(.10,3.5,90);
-        release();
+        release();*/
 
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
+
     }
 
 
@@ -482,6 +486,65 @@ public class GyroBlueTeam1 extends LinearOpMode {
      */
     public double getSteer(double error, double PCoeff) {
         return Range.clip(error * PCoeff, -1, 1);
+    }
+
+    public void encoderDrive(double power, int distance ) {
+
+        int backLeftTarget;
+        int frontLeftTarget;
+        int backRightTarget;
+        int frontRightTarget;
+
+
+        // Determine new target position, and pass to motor controller
+        int movecounts = (int)(distance * COUNTS_PER_INCH);
+        backLeftTarget = robot.backLeft.getCurrentPosition() + movecounts;
+        frontLeftTarget = robot.frontLeft.getCurrentPosition() + movecounts;
+        backRightTarget = robot.backRight.getCurrentPosition() + movecounts;
+        frontRightTarget = robot.frontRight.getCurrentPosition() + movecounts;
+
+        // Set Target and Turn On RUN_TO_POSITION
+        robot.frontLeft.setTargetPosition(frontLeftTarget);
+        robot.backLeft.setTargetPosition(backLeftTarget);
+        robot.frontRight.setTargetPosition(frontRightTarget);
+        robot.backRight.setTargetPosition(backRightTarget);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while(opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()) {
+            telemetry.addData("Driving Backwards", "Running to %7d", distance);
+            telemetry.addData("Path2", "Running at %7d", robot.frontLeft.getCurrentPosition());
+            telemetry.addData("Path3", "Running at %7d", robot.frontRight.getCurrentPosition());
+            telemetry.addData("Path4", "Running at %7d", robot.backRight.getCurrentPosition());
+            telemetry.addData("Path5", "Running at %7d", robot.backLeft.getCurrentPosition());
+            telemetry.update();
+
+            idle();
+        }
+
+        power = Range.clip(Math.abs(power), 0.0, 1.0);
+        robot.frontLeft.setPower(power);
+        robot.frontRight.setPower(power);
+        robot.backLeft.setPower(power);
+        robot.backRight.setPower(power);
+
+        robot.StopDriving();
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot. backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    public void StopDriving(){
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backRight.setPower(0);
+        robot.backLeft.setPower(0);
     }
 
 }

@@ -23,6 +23,7 @@ public class CompetitionBot extends OpMode {
     public Servo s1;
     public Servo s2;
     public Servo arm;
+    public Servo catcherLeft;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -42,10 +43,12 @@ public class CompetitionBot extends OpMode {
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
         arm = hardwareMap.servo.get("arm");
+        catcherLeft = hardwareMap.servo.get("catcherLeft");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         intakeRight.setDirection(DcMotor.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         s2.setDirection(Servo.Direction.REVERSE);
@@ -83,6 +86,7 @@ public class CompetitionBot extends OpMode {
         double intakeLeftPower;
 
 
+
         if (Math.abs(gamepad1.left_stick_x) > .1)
             x = gamepad1.left_stick_x;
         else
@@ -105,15 +109,15 @@ public class CompetitionBot extends OpMode {
         else
             liftPower = 0;
          */
-        if (gamepad2.left_stick_y >= 0.1)
+        if (Math.abs(gamepad2.left_stick_y) > .1 )
             liftPower = gamepad2.left_stick_y;
 
-        if (gamepad2.right_trigger >= 0.1) {
+        if (gamepad2.right_trigger > 0.1) {
             s1.setPosition(.5);
             s2.setPosition(.5);
         }
 
-        if (gamepad2.left_trigger >= 0.1) {
+        if (gamepad2.left_trigger > 0.1) {
             s1.setPosition(1);
             s2.setPosition(1);
         }
@@ -128,6 +132,7 @@ public class CompetitionBot extends OpMode {
 
         if (gamepad1.left_trigger > .1) {
             intakeLeftPower = gamepad1.left_trigger;
+            catcherLeft.setPosition(1);
         }
         else if (gamepad1.left_bumper)
         {
@@ -137,15 +142,22 @@ public class CompetitionBot extends OpMode {
             intakeLeftPower = 0;
         }
 
-        if(gamepad1.x) {
+        if(gamepad2.x) {
             arm.setPosition(1);
         }
 
-        if(gamepad1.y){
+        if(gamepad2.y){
             arm.setPosition(0);
         }
 
-        lift.setPower(-liftPower);
+        if (gamepad1.x) {
+            catcherLeft.setPosition(1);
+        }
+        if (gamepad1.y) {
+            catcherLeft.setPosition(0);
+        }
+
+        lift.setPower(liftPower);
         intakeLeft.setPower(-intakeLeftPower);
         intakeRight.setPower(-intakeRightPower);
         frontLeft.setPower(y+x+z); //changed nov 20 from .4 to full speed

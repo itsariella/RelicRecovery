@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -79,7 +80,7 @@ import java.util.List;
  */
 
 @Autonomous(name="Vuforia Nav", group ="Concept")
-
+@Disabled
 public class ConceptVuforiaNavigation extends AutoEncoder {
 
     public static final String TAG = "Vuforia Navigation Sample";
