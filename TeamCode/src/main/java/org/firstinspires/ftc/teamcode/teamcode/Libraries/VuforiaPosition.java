@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -80,7 +81,7 @@ import java.util.List;
  */
 
 @Autonomous(name="Concept: Glyph Test", group ="Concept")
-
+@Disabled
 public class VuforiaPosition extends LinearOpMode {
 
     public static final String TAG = "Vuforia Navigation Sample";

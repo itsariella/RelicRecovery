@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -84,6 +85,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Vuforia Red 1 Flip", group="Pushbot")
+@Disabled
 public class VuforiaRedTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */

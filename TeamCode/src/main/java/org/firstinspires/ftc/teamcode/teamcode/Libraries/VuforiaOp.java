@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 import android.graphics.Bitmap;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.vuforia.HINT;
 import com.vuforia.Matrix34F;
@@ -27,6 +28,7 @@ import java.util.Arrays;
  */
 
 @Autonomous(name="VuforiaOp", group="Pushbot")
+@Disabled
 public class VuforiaOp extends AutoEncoderHybrid {
     @Override
     public void runOpMode() throws InterruptedException {
