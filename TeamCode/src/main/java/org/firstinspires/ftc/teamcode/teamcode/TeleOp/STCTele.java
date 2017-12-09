@@ -12,15 +12,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class STCTele extends OpMode {
 
     // Motors
-    public DcMotor frontRight;
-    public DcMotor frontLeft;
-    public DcMotor backRight;
-    public DcMotor backLeft;
-    public DcMotor intakeLeft;
-    public DcMotor intakeRight;
-    public DcMotor wheelBoxLeft;
-    public DcMotor wheelBoxRight;
 
+    public DcMotor Frontright;
+    public DcMotor Frontleft;
+    public DcMotor Backright;
+    public DcMotor Backleft;
 
 
 
@@ -30,19 +26,10 @@ public class STCTele extends OpMode {
     @Override
     public void init() {
 
-        frontRight = hardwareMap.dcMotor.get("frontRight");
-        frontLeft = hardwareMap.dcMotor.get("frontLeft");
-        backRight = hardwareMap.dcMotor.get("backRight");
-        backLeft = hardwareMap.dcMotor.get("backLeft");
-        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
-        intakeRight = hardwareMap.dcMotor.get("intakeRight");
-        wheelBoxLeft = hardwareMap.dcMotor.get("wheelBoxLeft");
-        wheelBoxRight = hardwareMap.dcMotor.get("wheelBoxRight");
-
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-        wheelBoxRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        Frontright = hardwareMap.dcMotor.get("frontright");
+        Frontleft = hardwareMap.dcMotor.get("frontleft");
+        Backright = hardwareMap.dcMotor.get("backright");
+        Backleft = hardwareMap.dcMotor.get("backleft");
 
 
         // Send telemetry message to signify robot waiting;
@@ -69,55 +56,29 @@ public class STCTele extends OpMode {
     @Override
     public void loop() {
 
-        double frMotor = 0;
-        double brMotor = 0;
-        double flMotor = 0;
-        double blMotor = 0;
-        double leftY;
-        double leftX;
-        double rightX;
-        double intakeIn;
-        double boxValue;
+        double frontleft = 0;
+        double frontright = 0;
+        double backright = 0;
+        double backleft = 0;
 
-        leftX = gamepad1.left_stick_x;
-        leftY = gamepad1.left_stick_y;
-        rightX = gamepad1.right_stick_x;
-        intakeIn = gamepad1.right_trigger * 4;
+
+        frontleft = gamepad1.left_stick_y;
+        backleft = gamepad1.left_stick_y;
+        frontright = gamepad1.right_stick_y;
+        backright = gamepad1.right_stick_y;
 
 
 
         if (Math.abs(gamepad1.left_stick_y) > .1 || Math.abs(gamepad1.left_stick_x) > .1) {
-            frMotor = (-leftX - leftY) * .6;
-            flMotor = (leftX - leftY) * .6;
-            brMotor = (leftX - leftY) *.6;
-            blMotor = (-leftX - leftY) *.6;
+
+
         }
 
-        if (Math.abs(gamepad1.right_stick_x) > .1){
-            frMotor = -(rightX) *.6;
-            flMotor = (rightX) *.6;
-            brMotor = -(rightX) *.6;
-            blMotor = (rightX) *.6;
-        }
 
-        if (gamepad1.right_bumper)
-            boxValue = 1;
-
-        else if(gamepad1.left_bumper)
-            boxValue = -1;
-        else
-            boxValue = 0;
-
-        frontRight.setPower(frMotor);
-        backRight.setPower(brMotor);
-        frontLeft.setPower(flMotor);
-        backLeft.setPower(blMotor);
-        intakeRight.setPower(intakeIn);
-        intakeLeft.setPower(intakeIn);
-        wheelBoxLeft.setPower(boxValue);
-        wheelBoxRight.setPower(boxValue);
-
-
+        Frontleft.setPower(frontleft);
+        Frontright.setPower(frontright);
+        Backright.setPower(backright);
+        Backleft.setPower(backleft);
         }
 
     /*

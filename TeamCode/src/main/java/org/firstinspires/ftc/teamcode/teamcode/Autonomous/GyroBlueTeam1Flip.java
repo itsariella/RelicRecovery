@@ -38,17 +38,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
-
 
 /**
  * This file illustrates the concept of driving a path based on GyroBlueTeam1 heading and encoder counts.
@@ -83,25 +75,24 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Vuforia Red 1", group="Pushbot")
-public class VuforiaRedTeam1 extends LinearOpMode {
+@Autonomous(name="Gyro Blue 1 Flip", group="Pushbot")
+public class GyroBlueTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
     PushbotHardware robot   = new PushbotHardware();   // Use a Pushbot's hardware
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
-    VuforiaLocalizer vuforia;
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     COUNTS_PER_MOTOR_REV    = 1680 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
 
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.1 ;     // Nominal speed for better accuracy.
-    static final double     TURN_SPEED              = 0.3;     // Nominal half speed for better accuracy.
+    static final double     DRIVE_SPEED             = 0.2 ;     // Nominal speed for better accuracy.
+    static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
@@ -116,16 +107,6 @@ public class VuforiaRedTeam1 extends LinearOpMode {
          * The init() method of the hardware class does most of the work here
          */
         robot.init(hardwareMap);
-
-        //vuforia
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        vparameters.vuforiaLicenseKey = "AcVwYcb/////AAAAGWEdxQf3YU2/lW5yeYD13aeDV1xztWzGXEMrenB3Ax0/LWpgWHKVby7cXbxJVFwwxDnktV0N/HDZ9gXDhz0reHdJ++0LRfTmDRWcbPcCRCZJk5FV3WvLmkUz8zyGUTDQabO3ooR2oaDD/HqZDLHXunzpIGWjJKOYSNlUSRE0Xy2LwTIqOZEprAOhZnuMolNTuTZa3Z5Ql7C2MmJqkpfvrBEIUS/+D0Ozt9LHD20zJKH45TMqa5EkJl2mqf3me+lFhhgJa0ff/gPBomVoayhQUvp72E6nOwF/nVLBIAf/GiZ2DOdW7DGCqrl5cBlvL7UsFkqY2526WTbDtahssM+7ABgUKlDyBOgd0/15JNLv2/CL";
-        vparameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
-        this.vuforia = ClassFactory.createVuforiaLocalizer(vparameters);
-        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable relicTemplate = relicTrackables.get(0);
-        relicTemplate.setName("relicVuMarkTemplate");
 
         // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
         robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -171,6 +152,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sleep(100);
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
@@ -180,129 +162,31 @@ public class VuforiaRedTeam1 extends LinearOpMode {
             telemetry.update();
         }
 
-        //imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+        //imu.startAccelerationIntegration(new Position(), new Velocity(), 1000); //used to be commented out
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
 
-        while (opModeIsActive()) {
+        sleep(500);
+        grab();
+        sleep(500);
+        liftUp();
+        sleep(500);
+        armDown();
+        sleep(1000);
+        jewel();
+        sleep(1000);
+        armUp();
+        gyroDrive(.10,-35,0);
+        gyroTurn(TURN_SPEED,-90);
+        gyroHold(TURN_SPEED,-90,.5);
+        gyroDrive(.10,3.5,-90);
+        release();
 
-            /**
-             * See if any of the instances of {@link relicTemplate} are currently visible.
-             * {@link RelicRecoveryVuMark} is an enum which can have the following values:
-             * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
-             * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
-             */
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
-                /* Found an instance of the template. In the actual game, you will probably
-                 * loop until this condition occurs, then move on to act accordingly depending
-                 * on which VuMark was visible. */
-                telemetry.addData("VuMark", "%s visible", vuMark);
-
-                /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
-                 * it is perhaps unlikely that you will actually need to act on this pose information, but
-                 * we illustrate it nevertheless, for completeness. */
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
-                telemetry.addData("Pose", format(pose));
-
-                if(vuMark == RelicRecoveryVuMark.CENTER){
-                    telemetry.addLine("Going Center");
-
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,-35,0);
-                    gyroTurn(TURN_SPEED,90);
-                    gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,3.5,90);
-                    release();
-
-                    telemetry.addData("Path", "Complete");
-                    telemetry.update();
-
-                }
-                else if(vuMark == RelicRecoveryVuMark.LEFT) {
-                    telemetry.addLine("Going Left");
-
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,-42,0);
-                    gyroTurn(TURN_SPEED,90);
-                    gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,3.5,90);
-                    release();
-
-                    telemetry.addData("Path", "Complete");
-                    telemetry.update();
-
-                }
-                else if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                    telemetry.addLine("Going Right");
-
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,-27,0);
-                    gyroTurn(TURN_SPEED,90);
-                    gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,3.5,90);
-                    release();
-
-                    telemetry.addData("Path", "Complete");
-                    telemetry.update();
-
-                }
-            }
-            else {
-                telemetry.addData("VuMark", "not visible");
-
-                grab();
-                sleep(500);
-                liftUp();
-                sleep(500);
-                armDown();
-                sleep(1000);
-                jewel();
-                sleep(1000);
-                armUp();
-                gyroDrive(DRIVE_SPEED,-33,0);
-                gyroTurn(TURN_SPEED,90);
-                gyroHold(TURN_SPEED,90,.5);
-                gyroDrive(DRIVE_SPEED,10,90);
-                sleep(500);
-                release();
-                gyroDrive(DRIVE_SPEED,-5,0);
-                grab();
-                sleep(500);
-                gyroDrive(DRIVE_SPEED,5,0);
-
-                telemetry.addData("Path", "Complete");
-                telemetry.update();
-            }
-            telemetry.update();
-        }
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
     }
 
 
@@ -338,7 +222,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;
@@ -464,14 +348,14 @@ public class VuforiaRedTeam1 extends LinearOpMode {
     public void jewel() {
 
         if (colorSensor.blue() > colorSensor.red()) {
-            gyroTurn(TURN_SPEED, 10);
-            gyroHold(TURN_SPEED, 10, 0.5);
+            gyroTurn(TURN_SPEED, 15);
+            gyroHold(TURN_SPEED, 15, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
         } else {
-            gyroTurn(TURN_SPEED, -10);
-            gyroHold(TURN_SPEED, -10, 0.5);
+            gyroTurn(TURN_SPEED, -15);
+            gyroHold(TURN_SPEED, -15, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
@@ -479,19 +363,22 @@ public class VuforiaRedTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(0);
+        robot.jewelArm2.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm2.setPosition(1);
     }
+
     public void grab() {
         robot.s1.setPosition(0.5);
         robot.s2.setPosition(0.5);
     }
+
     public void release(){
         robot.s1.setPosition(1);
         robot.s2.setPosition(1);
     }
+
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -587,10 +474,6 @@ public class VuforiaRedTeam1 extends LinearOpMode {
      */
     public double getSteer(double error, double PCoeff) {
         return Range.clip(error * PCoeff, -1, 1);
-    }
-
-    String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
 
 }

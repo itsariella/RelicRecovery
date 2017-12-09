@@ -84,7 +84,7 @@ public class GyroRedTeam1 extends LinearOpMode {
     PushbotHardware robot   = new PushbotHardware();   // Use a Pushbot's hardware
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 1680 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -93,7 +93,7 @@ public class GyroRedTeam1 extends LinearOpMode {
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
     static final double     DRIVE_SPEED             = 0.1 ;     // Nominal speed for better accuracy.
-    static final double     TURN_SPEED              = 0.3;     // Nominal half speed for better accuracy.
+    static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
@@ -158,6 +158,7 @@ public class GyroRedTeam1 extends LinearOpMode {
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
+
         // Wait for the game to start (Display GyroBlueTeam1 value), and reset gyro before we move..
         while (!isStarted()) {
             telemetry.addData(">", "Robot Heading = %d", imu.getAngularOrientation());
@@ -170,6 +171,7 @@ public class GyroRedTeam1 extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
 
+        /* center
         grab();
         sleep(500);
         liftUp();
@@ -179,10 +181,53 @@ public class GyroRedTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.10,-33,0);
+        gyroDrive(.20,-35,0);
         gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
-        gyroDrive(.10,9,90);
+        gyroDrive(.10,3.5,90);
+        release();
+        */
+
+        /* right
+        grab();
+        sleep(500);
+        liftUp();
+        sleep(500);
+        armDown();
+        sleep(1000);
+        jewel();
+        sleep(1000);
+        armUp();
+        gyroDrive(.20,-27,0);
+        gyroTurn(TURN_SPEED,90);
+        gyroHold(TURN_SPEED,90,.5);
+        gyroDrive(.10,3.5,90);
+        release();
+        */
+
+        grab();
+        sleep(500);
+        liftUp();
+        sleep(500);
+        armDown();
+        sleep(1000);
+        jewel();
+        sleep(1000);
+        armUp();
+        gyroDrive(.20,-42,0);
+        gyroTurn(TURN_SPEED,90);
+        gyroHold(TURN_SPEED,90,.5);
+        gyroDrive(.10,3.5,90);
+        release();
+
+
+        /*
+        sleep(1000);
+        release();
+        gyroDrive(.20,-4,90);
+        sleep(500);
+        grab();
+        gyroDrive(.20,4,90); */
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -221,7 +266,7 @@ public class GyroRedTeam1 extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;
@@ -347,15 +392,15 @@ public class GyroRedTeam1 extends LinearOpMode {
     public void jewel(){
 
         if(colorSensor.red() > colorSensor.blue()){
-            gyroTurn(TURN_SPEED,10);
-            gyroHold(TURN_SPEED,10,0.5);
+            gyroTurn(TURN_SPEED,20);
+            gyroHold(TURN_SPEED,20,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
         else {
-            gyroTurn(TURN_SPEED, -10);
-            gyroHold(TURN_SPEED, -10, 0.5);
+            gyroTurn(TURN_SPEED, -20);
+            gyroHold(TURN_SPEED, -20, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED,0,1);
@@ -363,14 +408,14 @@ public class GyroRedTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(.5);
+        robot.jewelArm.setPosition(1);
     }
     public void grab(){
-        robot.s1.setPosition(0);
-        robot.s2.setPosition(0);
+        robot.s1.setPosition(.5);
+        robot.s2.setPosition(.5);
     }
 
     public void release(){

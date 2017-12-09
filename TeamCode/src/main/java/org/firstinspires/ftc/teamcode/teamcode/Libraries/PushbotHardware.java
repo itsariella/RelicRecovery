@@ -63,18 +63,14 @@ public class PushbotHardware
     public DcMotor backRight;
     public DcMotor lift;
 
-    //Sensors
-    public VuforiaBot vuforia;
-
     //Servos
     public Servo jewelArm;
+    public Servo jewelArm2;
     public Servo s1;
     public Servo s2;
 
-
     public int vuMarkStatus;
 
-    public static final double MID_SERVO       =  0.5 ;
 
     /* Constructor */
     public PushbotHardware(){
@@ -93,16 +89,16 @@ public class PushbotHardware
         lift = hardwareMap.dcMotor.get("lift");
 
         jewelArm = hardwareMap.servo.get("arm");
+        jewelArm2 = hardwareMap.servo.get("arm2");
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         s2.setDirection(Servo.Direction.REVERSE);
+        jewelArm2.setDirection(Servo.Direction.REVERSE);
 
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
 
         //colorSensor = hardwareMap.colorSensor.get("color");
         //centerIR = hardwareMap.digitalChannel.get("centerIR");

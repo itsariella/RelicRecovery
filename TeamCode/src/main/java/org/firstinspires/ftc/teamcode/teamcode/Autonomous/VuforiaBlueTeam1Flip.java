@@ -83,8 +83,8 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Vuforia Red 1", group="Pushbot")
-public class VuforiaRedTeam1 extends LinearOpMode {
+@Autonomous(name="Vuforia Blue 1 Flip", group="Pushbot")
+public class VuforiaBlueTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
@@ -150,7 +150,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "imu 1");
         colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         colorSensor.enableLed(true);
         imu.initialize(parameters);
@@ -221,9 +221,9 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     sleep(1000);
                     armUp();
                     gyroDrive(.20,-35,0);
-                    gyroTurn(TURN_SPEED,90);
-                    gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,3.5,90);
+                    gyroTurn(TURN_SPEED,-90);
+                    gyroHold(TURN_SPEED,-90,.5);
+                    gyroDrive(.10,-3.5,-90);
                     release();
 
                     telemetry.addData("Path", "Complete");
@@ -242,10 +242,10 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     jewel();
                     sleep(1000);
                     armUp();
-                    gyroDrive(.20,-42,0);
-                    gyroTurn(TURN_SPEED,90);
-                    gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,3.5,90);
+                    gyroDrive(.20,-27,0);
+                    gyroTurn(TURN_SPEED,-90);
+                    gyroHold(TURN_SPEED,-90,.5);
+                    gyroDrive(.10,-3.5,90);
                     release();
 
                     telemetry.addData("Path", "Complete");
@@ -264,10 +264,10 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     jewel();
                     sleep(1000);
                     armUp();
-                    gyroDrive(.20,-27,0);
-                    gyroTurn(TURN_SPEED,90);
-                    gyroHold(TURN_SPEED,90,.5);
-                    gyroDrive(.10,3.5,90);
+                    gyroDrive(.20,-42,0);
+                    gyroTurn(TURN_SPEED,-90);
+                    gyroHold(TURN_SPEED,-90,.5);
+                    gyroDrive(.10,-3.5,90);
                     release();
 
                     telemetry.addData("Path", "Complete");
@@ -287,19 +287,15 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                 jewel();
                 sleep(1000);
                 armUp();
-                gyroDrive(DRIVE_SPEED,-33,0);
-                gyroTurn(TURN_SPEED,90);
-                gyroHold(TURN_SPEED,90,.5);
-                gyroDrive(DRIVE_SPEED,10,90);
-                sleep(500);
+                gyroDrive(.20,-28,0);
+                gyroTurn(TURN_SPEED,-90);
+                gyroHold(TURN_SPEED,-90,.5);
+                gyroDrive(.10,-3.5,90);
                 release();
-                gyroDrive(DRIVE_SPEED,-5,0);
-                grab();
-                sleep(500);
-                gyroDrive(DRIVE_SPEED,5,0);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
+
             }
             telemetry.update();
         }
@@ -479,10 +475,10 @@ public class VuforiaRedTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(0);
+        robot.jewelArm2.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm2.setPosition(1);
     }
     public void grab() {
         robot.s1.setPosition(0.5);

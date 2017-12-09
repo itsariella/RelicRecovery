@@ -18,10 +18,7 @@ public class AutoEncoder extends LinearOpMode {
     public DcMotor frontLeft;
     public DcMotor backRight;
     public DcMotor backLeft;
-    public DcMotor intakeRight;
-    public DcMotor intakeLeft;
-    public DcMotor wheelBoxRight;
-    public DcMotor getWheelBoxLeft;
+
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
@@ -45,24 +42,18 @@ public class AutoEncoder extends LinearOpMode {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
-        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
-        intakeRight = hardwareMap.dcMotor.get("intakeRight");
-        wheelBoxRight = hardwareMap.dcMotor.get("wheelBoxRight");
-        getWheelBoxLeft = hardwareMap.dcMotor.get("wheelBoxLeft");
+
 
         //motors mirror each other
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        wheelBoxRight.setDirection(DcMotor.Direction.REVERSE);
-        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
         //encoders
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         //wait for game to start
         waitForStart();
@@ -250,31 +241,6 @@ public class AutoEncoder extends LinearOpMode {
 
     }
 
-    public void Intake(double power, int time){
-
-        StopDriving();
-
-        // at 12 Volts battery, .4 speed, 1240 sleep time, turns approx. 90 deg
-        intakeLeft.setPower(power);
-        intakeRight.setPower(power);
-
-        sleep(time);
-
-        intakeLeft.setPower(0);
-        intakeRight.setPower(0);
-
-        while(opModeIsActive() && frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()){
-            telemetry.addData("intake Left",  "Running at %7d", intakeLeft.getCurrentPosition());
-            telemetry.addData("Intake Right",  "Running at %7d", intakeRight.getCurrentPosition());
-            telemetry.update();
-
-            idle();
-        }
-
-        intakeLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-    }
 
     public void StrafeRight(double power, int distance){
 
