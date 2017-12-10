@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import static java.lang.Thread.sleep;
 
-@TeleOp(name="CompetitionBot", group="Pushbot")
+@TeleOp(name="CompetitionBot2", group="Pushbot")
 public class CompetitionBotAutomated extends OpMode {
 
     // Motors
@@ -20,7 +20,6 @@ public class CompetitionBotAutomated extends OpMode {
     public DcMotor lift;
     public DcMotor intakeRight;
     public DcMotor intakeLeft;
-
 
     public Servo s1;
     public Servo s2;
