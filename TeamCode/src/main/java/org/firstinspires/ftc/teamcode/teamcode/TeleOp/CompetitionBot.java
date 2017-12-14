@@ -20,8 +20,8 @@ public class CompetitionBot extends OpMode {
     public DcMotor intakeLeft;
 
 
-    public Servo s1;
-    public Servo s2;
+    public Servo s1; //right?
+    public Servo s2; //left?
     public Servo arm;
     public Servo catcherLeft;
     public Servo catcherRight;
@@ -111,14 +111,14 @@ public class CompetitionBot extends OpMode {
             intakeRightPower = 0;
         }
 
-        if (gamepad1.left_trigger > .1) {
+        if (gamepad1.left_trigger > .1) { // IF USING INTAKE
             intakeLeftPower = gamepad1.left_trigger;
-            catcherLeft.setPosition(1);
+            catcherLeft.setPosition(1); //CATCH THE GLYPH
             catcherRight.setPosition(1);
         }
         else if (gamepad1.left_bumper)
         {
-            intakeLeftPower = -0.7;
+            intakeLeftPower = -0.7; // 70 percent speed
         }
         else {
             intakeLeftPower = 0;
@@ -138,20 +138,22 @@ public class CompetitionBot extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0.1) {
-            s1.setPosition(.5);
+            s1.setPosition(.5); // glyph arms close
             s2.setPosition(.5);
+            catcherLeft.setPosition(0); // move away catchers
+            catcherRight.setPosition(0);
         }
 
         if (gamepad2.left_trigger > 0.1) {
             s1.setPosition(1);
-            s2.setPosition(1);
+            s2.setPosition(1); // open glyph arms
         }
 
         if (gamepad2.right_bumper) {
             catcherLeft.setPosition(1); // use catchers
             catcherRight.setPosition(1);
         }
-        if (gamepad1.left_bumper) {
+        if (gamepad2.left_bumper) {
             catcherLeft.setPosition(0); // move away catchers
             catcherRight.setPosition(0);
         }

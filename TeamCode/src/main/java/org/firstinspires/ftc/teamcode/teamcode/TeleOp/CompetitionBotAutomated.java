@@ -144,7 +144,7 @@ public class CompetitionBotAutomated extends OpMode {
 
         if (gamepad2.right_trigger > 0.1) {
             s1.setPosition(.5);
-            s2.setPosition(.5); // probably close arms
+            s2.setPosition(.5); // close arms
         }
 
         if (gamepad2.left_trigger > 0.1) {
@@ -165,7 +165,7 @@ public class CompetitionBotAutomated extends OpMode {
             s1.setPosition(.5); // close arms to grab block
             s2.setPosition(.5);
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // reset encoders
-            lift.setTargetPosition(1600); // carries glyph to position 1600
+            lift.setTargetPosition(1120); // carries glyph to position 1600
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(0.5); // half speed
         }
