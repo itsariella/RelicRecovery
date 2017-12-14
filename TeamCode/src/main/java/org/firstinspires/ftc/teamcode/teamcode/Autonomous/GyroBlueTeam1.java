@@ -83,6 +83,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Gyro Blue 1", group="Pushbot")
+@Disabled
 public class GyroBlueTeam1 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -187,12 +188,11 @@ public class GyroBlueTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.10,15,0);
-        encoderDrive(.2,12);
-        /*gyroTurn(TURN_SPEED,90);
+        gyroDrive(.10,35,0);
+        gyroTurn(TURN_SPEED,90);
         gyroHold(TURN_SPEED,90,.5);
         gyroDrive(.10,3.5,90);
-        release();*/
+        release();
 
 
         telemetry.addData("Path", "Complete");

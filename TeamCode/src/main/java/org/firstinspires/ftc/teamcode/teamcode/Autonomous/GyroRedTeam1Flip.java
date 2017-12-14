@@ -76,8 +76,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Gyro Red 1 Flip", group="Pushbot")
-@Disabled
+@Autonomous(name="Gyro Red 1 New", group="Pushbot")
 public class GyroRedTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */

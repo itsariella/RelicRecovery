@@ -84,8 +84,8 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Vuforia Red 1 Flip", group="Pushbot")
-@Disabled
+@Autonomous(name="Vuforia Red 1 New", group="Pushbot")
+
 public class VuforiaRedTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -335,7 +335,7 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;
