@@ -88,7 +88,6 @@ public class PushbotHardware
         backLeft = hardwareMap.dcMotor.get("backLeft");
         lift = hardwareMap.dcMotor.get("lift");
 
-        jewelArm = hardwareMap.servo.get("arm");
         jewelArm2 = hardwareMap.servo.get("arm2");
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");

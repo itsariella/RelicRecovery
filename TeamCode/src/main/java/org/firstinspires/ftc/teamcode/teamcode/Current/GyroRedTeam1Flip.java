@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.teamcode.Current;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -217,7 +217,7 @@ public class GyroRedTeam1Flip extends LinearOpMode {
         gyroDrive(.20,42,0);
         gyroTurn(TURN_SPEED,-90);
         gyroHold(TURN_SPEED,-90,.5);
-        gyroDrive(.10,3.5,-90);
+        gyroDrive(.10,9,-90);
         release();
 
 
@@ -392,15 +392,15 @@ public class GyroRedTeam1Flip extends LinearOpMode {
     public void jewel(){
 
         if(colorSensor.red() > colorSensor.blue()){
-            gyroTurn(TURN_SPEED,20);
-            gyroHold(TURN_SPEED,20,0.5);
+            gyroTurn(TURN_SPEED,-20);
+            gyroHold(TURN_SPEED,-20,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
         else {
-            gyroTurn(TURN_SPEED, -20);
-            gyroHold(TURN_SPEED, -20, 0.5);
+            gyroTurn(TURN_SPEED, 20);
+            gyroHold(TURN_SPEED, 20, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED,0,1);
@@ -426,7 +426,7 @@ public class GyroRedTeam1Flip extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        robot.lift.setTargetPosition(750);
+        robot.lift.setTargetPosition(1120);
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);

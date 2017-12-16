@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.teamcode.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.teamcode.Current;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -23,8 +23,6 @@ public class CompetitionBot extends OpMode {
     public Servo s1; //right?
     public Servo s2; //left?
     public Servo arm;
-    public Servo catcherLeft;
-    public Servo catcherRight;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -42,18 +40,14 @@ public class CompetitionBot extends OpMode {
 
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
-        arm = hardwareMap.servo.get("arm");
-        catcherLeft = hardwareMap.servo.get("catcherLeft");
-        catcherRight = hardwareMap.servo.get("catcherRight");
+        arm = hardwareMap.servo.get("arm2");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        intakeRight.setDirection(DcMotor.Direction.REVERSE);
+        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
         s2.setDirection(Servo.Direction.REVERSE);
-        catcherRight.setDirection(Servo.Direction.REVERSE);
 
         s1.setPosition(0);
         s2.setPosition(0);
@@ -113,8 +107,6 @@ public class CompetitionBot extends OpMode {
 
         if (gamepad1.left_trigger > .1) { // IF USING INTAKE
             intakeLeftPower = gamepad1.left_trigger;
-            catcherLeft.setPosition(1); //CATCH THE GLYPH
-            catcherRight.setPosition(1);
         }
         else if (gamepad1.left_bumper)
         {
@@ -140,8 +132,7 @@ public class CompetitionBot extends OpMode {
         if (gamepad2.right_trigger > 0.1) {
             s1.setPosition(.5); // glyph arms close
             s2.setPosition(.5);
-            catcherLeft.setPosition(0); // move away catchers
-            catcherRight.setPosition(0);
+
         }
 
         if (gamepad2.left_trigger > 0.1) {
@@ -149,19 +140,10 @@ public class CompetitionBot extends OpMode {
             s2.setPosition(1); // open glyph arms
         }
 
-        if (gamepad2.right_bumper) {
-            catcherLeft.setPosition(1); // use catchers
-            catcherRight.setPosition(1);
-        }
-        if (gamepad2.left_bumper) {
-            catcherLeft.setPosition(0); // move away catchers
-            catcherRight.setPosition(0);
-        }
-
         // Set powers
         lift.setPower(liftPower);
-        intakeLeft.setPower(-intakeLeftPower);
-        intakeRight.setPower(-intakeRightPower);
+        intakeLeft.setPower(-intakeLeftPower * .85);
+        intakeRight.setPower(-intakeRightPower * .85);
         frontLeft.setPower(y+x+z);
         backLeft.setPower(y-x+z);
         frontRight.setPower(y-x-z);

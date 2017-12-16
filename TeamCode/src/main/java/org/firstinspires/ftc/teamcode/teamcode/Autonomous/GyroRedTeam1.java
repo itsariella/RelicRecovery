@@ -395,14 +395,14 @@ public class GyroRedTeam1 extends LinearOpMode {
 
         if(colorSensor.red() > colorSensor.blue()){
             gyroTurn(TURN_SPEED,20);
-            gyroHold(TURN_SPEED,20,0.5);
+            gyroHold(TURN_SPEED,20,1);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
         else {
             gyroTurn(TURN_SPEED, -20);
-            gyroHold(TURN_SPEED, -20, 0.5);
+            gyroHold(TURN_SPEED, -20, 1);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED,0,1);
