@@ -24,6 +24,8 @@ public class CompetitionBot extends OpMode {
     public Servo s2; //left?
     public Servo arm;
 
+    boolean setFullPosition = false;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -107,26 +109,29 @@ public class CompetitionBot extends OpMode {
 
         if (gamepad1.left_trigger > .1) { // IF USING INTAKE
             intakeLeftPower = gamepad1.left_trigger;
-        }
-        else if (gamepad1.left_bumper)
-        {
+        } else if (gamepad1.left_bumper) {
             intakeLeftPower = -0.7; // 70 percent speed
-        }
-        else {
+        } else {
             intakeLeftPower = 0;
         }
 
-        if(gamepad1.x) {
+        if (gamepad1.x) {
             arm.setPosition(1);
         }
 
-        if(gamepad1.y){
+        if (gamepad1.y) {
             arm.setPosition(0);
         }
 
         // Gamepad 2 controls
-        if (Math.abs(gamepad2.left_stick_y) > .1 ) {
+        if (Math.abs(gamepad2.left_stick_y) > .1) {
             liftPower = gamepad2.left_stick_y;
+        }
+        if (gamepad2.y) {
+            setFullPosition = true;
+        }
+        if (gamepad2.x) {
+            setFullPosition = false;
         }
 
         if (gamepad2.right_trigger > 0.1) {
@@ -136,25 +141,32 @@ public class CompetitionBot extends OpMode {
         }
 
         if (gamepad2.left_trigger > 0.1) {
-            s1.setPosition(1);
-            s2.setPosition(1); // open glyph arms
+
+            if (setFullPosition == true) {
+                s1.setPosition(0.6);
+                s2.setPosition(0.6); // open glyph arms
+            } else {
+                s1.setPosition(1);
+                s2.setPosition(1);
+            }
         }
 
-        // Set powers
-        lift.setPower(liftPower);
-        intakeLeft.setPower(-intakeLeftPower * .85);
-        intakeRight.setPower(-intakeRightPower * .85);
-        frontLeft.setPower(y+x+z);
-        backLeft.setPower(y-x+z);
-        frontRight.setPower(y-x-z);
-        backRight.setPower(y+x-z);
-}
+            // Set powers
+            lift.setPower(liftPower);
+            intakeLeft.setPower(-intakeLeftPower * .85);
+            intakeRight.setPower(-intakeRightPower * .85);
+            frontLeft.setPower(y + x + z);
+            backLeft.setPower(y - x + z);
+            frontRight.setPower(y - x - z);
+            backRight.setPower(y + x - z);
+        }
 
     /*
      * Code to run ONCE after the driver hits STOP
      */
-    @Override
-    public void stop(){
+        @Override
+        public void stop () {
+        }
+
     }
 
-}

@@ -225,20 +225,22 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                 if(vuMark == RelicRecoveryVuMark.CENTER){
                     telemetry.addLine("Going Center");
 
-                    gyroDrive(.20,-37,0);
+                    gyroDrive(.20,-35,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,-10,-90);
+                    gyroDrive(.10,10,-90);
                     release();
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
+
+                    sleep(10000);
 
                 }
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addLine("Going Left");
 
-                    gyroDrive(.20,-29,0);
+                    gyroDrive(.20,-27,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,90);
@@ -246,12 +248,14 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
+
+                    sleep(10000);
 
                 }
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addLine("Going Right");
 
-                    gyroDrive(.20,-44,0);
+                    gyroDrive(.20,-42,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,90);
@@ -259,6 +263,8 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
+
+                    sleep(10000);
 
                 }
             }
@@ -274,6 +280,8 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
+
+                sleep(10000);
 
             }
             telemetry.update();
@@ -439,14 +447,14 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
     public void jewel() {
 
         if (colorSensor.blue() > colorSensor.red()) {
-            gyroTurn(TURN_SPEED, 10);
-            gyroHold(TURN_SPEED, 10, 0.5);
+            gyroTurn(TURN_SPEED, -10);
+            gyroHold(TURN_SPEED, -10, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
         } else {
-            gyroTurn(TURN_SPEED, -10);
-            gyroHold(TURN_SPEED, -10, 0.5);
+            gyroTurn(TURN_SPEED, 10);
+            gyroHold(TURN_SPEED, 10, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);

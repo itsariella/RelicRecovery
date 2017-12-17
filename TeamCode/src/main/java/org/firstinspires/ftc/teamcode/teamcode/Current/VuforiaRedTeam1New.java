@@ -273,15 +273,6 @@ public class VuforiaRedTeam1New extends LinearOpMode {
             else {
                 telemetry.addData("VuMark", "not visible");
 
-                grab();
-                sleep(500);
-                liftUp();
-                sleep(500);
-                armDown();
-                sleep(1000);
-                jewel();
-                sleep(1000);
-                armUp();
                 gyroDrive(DRIVE_SPEED,33,0);
                 gyroTurn(TURN_SPEED,-90);
                 gyroHold(TURN_SPEED,-90,.5);

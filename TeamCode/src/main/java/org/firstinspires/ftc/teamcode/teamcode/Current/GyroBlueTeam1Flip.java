@@ -74,6 +74,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Gyro Blue 1 New", group="Pushbot")
+@Disabled
 public class GyroBlueTeam1Flip extends LinearOpMode {
 
     /* Declare OpMode members. */
