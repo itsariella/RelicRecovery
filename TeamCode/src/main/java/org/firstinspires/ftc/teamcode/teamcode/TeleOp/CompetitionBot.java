@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.teamcode.teamcode.Current;
+package org.firstinspires.ftc.teamcode.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -116,7 +116,7 @@ public class CompetitionBot extends OpMode {
         }
 
         if (gamepad1.x) {
-            arm.setPosition(1);
+            arm.setPosition(0.5);
         }
 
         if (gamepad1.y) {

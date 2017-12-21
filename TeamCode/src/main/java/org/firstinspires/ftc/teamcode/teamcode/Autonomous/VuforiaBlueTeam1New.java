@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teamcode.Current;
+package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -230,11 +230,13 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,-90);
                     release();
+                    gyroDrive(.10,-2,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
 
                     sleep(10000);
+
 
                 }
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
@@ -245,6 +247,7 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,90);
                     release();
+                    gyroDrive(.10,-2,90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -260,6 +263,7 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,90);
                     release();
+                    gyroDrive(.10,-2, 90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -277,6 +281,7 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                 gyroHold(TURN_SPEED,-90,.5);
                 gyroDrive(.10,10,90);
                 release();
+                gyroDrive(.10,-2,90);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
