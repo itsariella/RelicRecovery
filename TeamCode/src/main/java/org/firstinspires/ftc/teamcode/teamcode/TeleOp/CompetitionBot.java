@@ -24,6 +24,9 @@ public class CompetitionBot extends OpMode {
     public Servo s2; //left?
     public Servo arm;
 
+    public Servo catcherLeft;
+    public Servo catcherRight;
+
     boolean setFullPosition = false;
 
     /*
@@ -101,6 +104,9 @@ public class CompetitionBot extends OpMode {
 
         if (gamepad1.right_trigger > .1) {
             intakeRightPower = gamepad1.right_trigger;
+            catcherLeft.setPosition(1); //CATCH THE GLYPH
+            catcherRight.setPosition(1);
+
         } else if (gamepad1.right_bumper) {
             intakeRightPower = -0.7;
         } else {
@@ -137,6 +143,9 @@ public class CompetitionBot extends OpMode {
         if (gamepad2.right_trigger > 0.1) {
             s1.setPosition(.5); // glyph arms close
             s2.setPosition(.5);
+            catcherLeft.setPosition(0); // move away catchers
+            catcherRight.setPosition(0);
+
 
         }
 
@@ -145,13 +154,24 @@ public class CompetitionBot extends OpMode {
             if (setFullPosition == true) {
                 s1.setPosition(0.6);
                 s2.setPosition(0.6); // open glyph arms
+
             } else {
                 s1.setPosition(1);
                 s2.setPosition(1);
             }
         }
 
-            // Set powers
+        if (gamepad2.right_bumper) {
+            catcherLeft.setPosition(1); // use catchers
+            catcherRight.setPosition(1);
+        }
+        if (gamepad2.left_bumper) {
+            catcherLeft.setPosition(0); // move away catchers
+            catcherRight.setPosition(0);
+        }
+
+
+        // Set powers
             lift.setPower(liftPower);
             intakeLeft.setPower(-intakeLeftPower * .85);
             intakeRight.setPower(-intakeRightPower * .85);

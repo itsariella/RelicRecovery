@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.teamcode.Autonomous.GyroBlueTeam1;
 import org.firstinspires.ftc.teamcode.teamcode.Sensors.ColorProgram;
 
 /* This program tests autonomous

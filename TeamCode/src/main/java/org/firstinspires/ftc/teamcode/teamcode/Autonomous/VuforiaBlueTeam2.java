@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -83,9 +84,9 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Vuforia Blue 1 New", group="Pushbot")
-
-public class VuforiaBlueTeam1New extends LinearOpMode {
+@Autonomous(name="Vuforia Blue 2", group="Pushbot")
+@Disabled
+public class VuforiaBlueTeam2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
@@ -161,7 +162,7 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
             sleep(50);
             idle();
         } */
-        relicTrackables.activate();
+        relicTrackables.activate(); //activate before start button ispressed
 
         telemetry.addData(">", "Robot Ready.");    //
         telemetry.update();
@@ -192,13 +193,13 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
         while (opModeIsActive()) {
 
             grab();
-            sleep(500);
+            sleep(250);
             liftUp();
-            sleep(500);
+            sleep(250);
             armDown();
-            sleep(1000);
+            sleep(750);
             jewel();
-            sleep(1000);
+            sleep(750);
             armUp();
             gyroDrive(.10,2,0);
 
@@ -223,20 +224,19 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                 telemetry.addData("Pose", format(pose));
 
                 if(vuMark == RelicRecoveryVuMark.CENTER){
-                    telemetry.addLine("Going Center");
+                    telemetry.addLine("Going Center"); //updated
 
-                    gyroDrive(.20,-35,0);
+                    gyroDrive(0.10,24,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,10,-90);
+                    gyroDrive(DRIVE_SPEED,12,90);
+                    gyroTurn(TURN_SPEED,0);
+                    gyroHold(TURN_SPEED,0,.5);
+                    gyroDrive(DRIVE_SPEED,12,0);
                     release();
-                    gyroDrive(.10,-2,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
-
-                    sleep(10000);
-
 
                 }
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
@@ -247,12 +247,10 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,90);
                     release();
-                    gyroDrive(.10,-2,90);
+                    gyroDrive(.10,-3,90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
-
-                    sleep(10000);
 
                 }
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
@@ -263,12 +261,10 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(.10,10,90);
                     release();
-                    gyroDrive(.10,-2, 90);
+                    gyroDrive(.10,-3, 90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
-
-                    sleep(10000);
 
                 }
             }
@@ -281,15 +277,14 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
                 gyroHold(TURN_SPEED,-90,.5);
                 gyroDrive(.10,10,90);
                 release();
-                gyroDrive(.10,-2,90);
+                gyroDrive(.10,-3,90);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
 
-                sleep(10000);
-
             }
             telemetry.update();
+            sleep(15000);
         }
     }
 
@@ -467,10 +462,10 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm2.setPosition(0);
+        robot.jewelArm2.setPosition(0.5);
     }
     public void armUp(){
-        robot.jewelArm2.setPosition(1);
+        robot.jewelArm2.setPosition(0);
     }
     public void grab() {
         robot.s1.setPosition(0.5);
@@ -484,14 +479,14 @@ public class VuforiaBlueTeam1New extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        robot.lift.setTargetPosition(1500); //1120
+        robot.lift.setTargetPosition(1500);
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         //set power
-        robot.lift.setPower(0.3);
+        robot.lift.setPower(1);
 
         while(opModeIsActive() && robot.lift.isBusy()){
             telemetry.addData("Path2",  "Running at %7d", robot.lift.getCurrentPosition());
