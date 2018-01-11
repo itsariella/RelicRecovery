@@ -449,15 +449,15 @@ public class VuforiaRedTeam2 extends LinearOpMode {
     public void jewel(){
 
         if(colorSensor.red() > colorSensor.blue()){
-            gyroTurn(TURN_SPEED,-20);
-            gyroHold(TURN_SPEED,-20,0.5);
+            gyroTurn(TURN_SPEED,20);
+            gyroHold(TURN_SPEED,20,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
         else {
-            gyroTurn(TURN_SPEED, 20);
-            gyroHold(TURN_SPEED, 20, 0.5);
+            gyroTurn(TURN_SPEED, -20);
+            gyroHold(TURN_SPEED, -20, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED,0,1);
@@ -465,10 +465,10 @@ public class VuforiaRedTeam2 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm2.setPosition(0.5);
+        robot.jewelArm2.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm2.setPosition(0);
+        robot.jewelArm2.setPosition(1);
     }
     public void grab() {
         robot.s1.setPosition(0.5);

@@ -47,10 +47,15 @@ public class CompetitionBot extends OpMode {
         s2 = hardwareMap.servo.get("s2");
         arm = hardwareMap.servo.get("arm2");
 
+        catcherLeft = hardwareMap.servo.get("catcherLeft");
+        catcherRight = hardwareMap.servo.get("catcherRight");
+
+
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        catcherLeft.setDirection(Servo.Direction.REVERSE);
 
         s2.setDirection(Servo.Direction.REVERSE);
 
@@ -104,8 +109,8 @@ public class CompetitionBot extends OpMode {
 
         if (gamepad1.right_trigger > .1) {
             intakeRightPower = gamepad1.right_trigger;
-            catcherLeft.setPosition(1); //CATCH THE GLYPH
-            catcherRight.setPosition(1);
+            //catcherLeft.setPosition(0); //CATCH THE GLYPH
+            //catcherRight.setPosition(0);
 
         } else if (gamepad1.right_bumper) {
             intakeRightPower = -0.7;
@@ -122,7 +127,7 @@ public class CompetitionBot extends OpMode {
         }
 
         if (gamepad1.x) {
-            arm.setPosition(0.5);
+            arm.setPosition(0.6);
         }
 
         if (gamepad1.y) {
@@ -141,8 +146,8 @@ public class CompetitionBot extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0.1) {
-            s1.setPosition(.5); // glyph arms close
-            s2.setPosition(.5);
+            s1.setPosition(0); // glyph arms close
+            s2.setPosition(0);
             catcherLeft.setPosition(0); // move away catchers
             catcherRight.setPosition(0);
 
@@ -152,12 +157,12 @@ public class CompetitionBot extends OpMode {
         if (gamepad2.left_trigger > 0.1) {
 
             if (setFullPosition == true) {
-                s1.setPosition(0.6);
-                s2.setPosition(0.6); // open glyph arms
+                s1.setPosition(0.2);
+                s2.setPosition(0.2); // open glyph arms
 
             } else {
-                s1.setPosition(1);
-                s2.setPosition(1);
+                s1.setPosition(.3);
+                s2.setPosition(.3);
             }
         }
 
@@ -173,8 +178,8 @@ public class CompetitionBot extends OpMode {
 
         // Set powers
             lift.setPower(liftPower);
-            intakeLeft.setPower(-intakeLeftPower * .85);
-            intakeRight.setPower(-intakeRightPower * .85);
+            intakeLeft.setPower(-intakeLeftPower * .60);
+            intakeRight.setPower(-intakeRightPower * .60);
             frontLeft.setPower(y + x + z);
             backLeft.setPower(y - x + z);
             frontRight.setPower(y - x - z);
