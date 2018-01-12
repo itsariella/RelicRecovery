@@ -278,7 +278,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                     gyroDrive(DRIVE_SPEED,-15,-90);
                     grab();
                     gyroDrive(DRIVE_SPEED,16,-90);
-                    gyroDrive(DRIVE_SPEED,-5,-90);    gyroDrive(DRIVE_SPEED,-3, 90);
+                    gyroDrive(DRIVE_SPEED,-5,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -287,7 +287,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
             }
             else {
                 telemetry.addData("VuMark", "not visible");
-
 
                 gyroDrive(DRIVE_SPEED,-28,0);
                 gyroTurn(TURN_SPEED,-90);

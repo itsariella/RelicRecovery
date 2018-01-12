@@ -148,9 +148,6 @@ public class CompetitionBot extends OpMode {
         if (gamepad2.right_trigger > 0.1) {
             s1.setPosition(0); // glyph arms close
             s2.setPosition(0);
-            catcherLeft.setPosition(0); // move away catchers
-            catcherRight.setPosition(0);
-
 
         }
 
@@ -178,8 +175,8 @@ public class CompetitionBot extends OpMode {
 
         // Set powers
             lift.setPower(liftPower);
-            intakeLeft.setPower(-intakeLeftPower * .60);
-            intakeRight.setPower(-intakeRightPower * .60);
+            intakeLeft.setPower(-intakeLeftPower * .70);
+            intakeRight.setPower(-intakeRightPower * .70);
             frontLeft.setPower(y + x + z);
             backLeft.setPower(y - x + z);
             frontRight.setPower(y - x - z);
