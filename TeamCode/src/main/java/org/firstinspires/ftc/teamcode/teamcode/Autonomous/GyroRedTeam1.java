@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -40,7 +41,6 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import org.firstinspires.ftc.teamcode.teamcode.Libraries.AutoEncoder;
 import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
 
 /**
@@ -76,7 +76,8 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Gyro Red 1", group="Pushbot")
+@Autonomous(name="Gyro Red 1 New", group="Pushbot")
+@Disabled
 public class GyroRedTeam1 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -84,7 +85,7 @@ public class GyroRedTeam1 extends LinearOpMode {
     PushbotHardware robot   = new PushbotHardware();   // Use a Pushbot's hardware
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1680 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -214,10 +215,10 @@ public class GyroRedTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.20,-36,0);
-        gyroTurn(TURN_SPEED,90);
-        gyroHold(TURN_SPEED,90,.5);
-        gyroDrive(.10,6,90);
+        gyroDrive(.20,42,0);
+        gyroTurn(TURN_SPEED,-90);
+        gyroHold(TURN_SPEED,-90,.5);
+        gyroDrive(.10,9,-90);
         release();
 
 
@@ -392,15 +393,15 @@ public class GyroRedTeam1 extends LinearOpMode {
     public void jewel(){
 
         if(colorSensor.red() > colorSensor.blue()){
-            gyroTurn(TURN_SPEED,20);
-            gyroHold(TURN_SPEED,20,0.5);
+            gyroTurn(TURN_SPEED,-20);
+            gyroHold(TURN_SPEED,-20,0.5);
             armUp();
             gyroTurn(TURN_SPEED,0);
             gyroHold(TURN_SPEED,0,1);
         }
         else {
-            gyroTurn(TURN_SPEED, -20);
-            gyroHold(TURN_SPEED, -20, 0.5);
+            gyroTurn(TURN_SPEED, 20);
+            gyroHold(TURN_SPEED, 20, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED,0,1);
@@ -408,10 +409,10 @@ public class GyroRedTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(0);
+        robot.jewelArm2.setPosition(0);
     }
     public void armUp(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm2.setPosition(1);
     }
     public void grab(){
         robot.s1.setPosition(.5);
@@ -426,7 +427,7 @@ public class GyroRedTeam1 extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        robot.lift.setTargetPosition(750);
+        robot.lift.setTargetPosition(1120);
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);

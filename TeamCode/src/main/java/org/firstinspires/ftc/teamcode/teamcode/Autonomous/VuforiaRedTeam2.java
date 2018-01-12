@@ -84,9 +84,9 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Vuforia Blue 1 Flip", group="Pushbot")
+@Autonomous(name="Vuforia Red 2", group="Pushbot")
 @Disabled
-public class VuforiaBlueTeam1Flip extends LinearOpMode {
+public class VuforiaRedTeam2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
@@ -95,7 +95,7 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
     VuforiaLocalizer vuforia;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -152,7 +152,7 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu 1");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
         colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         colorSensor.enableLed(true);
         imu.initialize(parameters);
@@ -164,10 +164,14 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
             idle();
         } */
 
+        relicTrackables.activate();
+
         telemetry.addData(">", "Robot Ready.");    //
         telemetry.update();
 
+
         waitForStart();
+
 
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -190,6 +194,19 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+            grab();
+            sleep(500);
+            liftUp();
+            sleep(500);
+            armDown();
+            sleep(1000);
+            jewel();
+            sleep(1000);
+            armUp();
+            gyroDrive(.1,2,0);
+            sleep(750);
+
+
             /**
              * See if any of the instances of {@link relicTemplate} are currently visible.
              * {@link RelicRecoveryVuMark} is an enum which can have the following values:
@@ -211,21 +228,15 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
                 telemetry.addData("Pose", format(pose));
 
                 if(vuMark == RelicRecoveryVuMark.CENTER){
-                    telemetry.addLine("Going Center");
+                    telemetry.addLine("Going Center"); //updated
 
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,-35,0);
-                    gyroTurn(TURN_SPEED,-90);
-                    gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,-3.5,-90);
+                    gyroDrive(0.10,-24,0);
+                    gyroTurn(TURN_SPEED,90);
+                    gyroHold(TURN_SPEED,90,.5);
+                    gyroDrive(DRIVE_SPEED,-12,90);
+                    gyroTurn(TURN_SPEED,180);
+                    gyroHold(TURN_SPEED,180,.5);
+                    gyroDrive(DRIVE_SPEED,12,180);
                     release();
 
                     telemetry.addData("Path", "Complete");
@@ -235,20 +246,12 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addLine("Going Left");
 
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,-27,0);
+                    gyroDrive(.20,40,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,-3.5,90);
+                    gyroDrive(.10,9,-90);
                     release();
+                    gyroDrive(.10,-3,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -257,20 +260,12 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addLine("Going Right");
 
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,-42,0);
+                    gyroDrive(.20,25,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,-3.5,90);
+                    gyroDrive(.10,9,-90);
                     release();
+                    gyroDrive(.10,-3,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -280,26 +275,18 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
             else {
                 telemetry.addData("VuMark", "not visible");
 
-                grab();
-                sleep(500);
-                liftUp();
-                sleep(500);
-                armDown();
-                sleep(1000);
-                jewel();
-                sleep(1000);
-                armUp();
-                gyroDrive(.20,-28,0);
+                gyroDrive(DRIVE_SPEED,33,0);
                 gyroTurn(TURN_SPEED,-90);
                 gyroHold(TURN_SPEED,-90,.5);
-                gyroDrive(.10,-3.5,90);
+                gyroDrive(DRIVE_SPEED,9,-90);
                 release();
+                gyroDrive(.10,-3,-90);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
-
             }
             telemetry.update();
+            sleep(15000);
         }
     }
 
@@ -336,7 +323,7 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;
@@ -459,20 +446,21 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
         robot.backRight.setPower(0);
     }
 
-    public void jewel() {
+    public void jewel(){
 
-        if (colorSensor.blue() > colorSensor.red()) {
-            gyroTurn(TURN_SPEED, 10);
-            gyroHold(TURN_SPEED, 10, 0.5);
+        if(colorSensor.red() > colorSensor.blue()){
+            gyroTurn(TURN_SPEED,20);
+            gyroHold(TURN_SPEED,20,0.5);
+            armUp();
+            gyroTurn(TURN_SPEED,0);
+            gyroHold(TURN_SPEED,0,1);
+        }
+        else {
+            gyroTurn(TURN_SPEED, -20);
+            gyroHold(TURN_SPEED, -20, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
-            gyroHold(TURN_SPEED, 0, 1);
-        } else {
-            gyroTurn(TURN_SPEED, -10);
-            gyroHold(TURN_SPEED, -10, 0.5);
-            armUp();
-            gyroTurn(TURN_SPEED, 0);
-            gyroHold(TURN_SPEED, 0, 1);
+            gyroHold(TURN_SPEED,0,1);
         }
     }
 
@@ -494,14 +482,14 @@ public class VuforiaBlueTeam1Flip extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        robot.lift.setTargetPosition(750); //1120
+        robot.lift.setTargetPosition(1500);
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         //set power
-        robot.lift.setPower(0.1);
+        robot.lift.setPower(1);
 
         while(opModeIsActive() && robot.lift.isBusy()){
             telemetry.addData("Path2",  "Running at %7d", robot.lift.getCurrentPosition());

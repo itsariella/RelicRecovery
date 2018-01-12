@@ -84,9 +84,9 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Vuforia Red 1 Flip", group="Pushbot")
+@Autonomous(name="Vuforia Blue 100pt", group="Pushbot")
 @Disabled
-public class VuforiaRedTeam1Flip extends LinearOpMode {
+public class NewBlueTeam1 extends LinearOpMode {
 
     /* Declare OpMode members. */
     ColorSensor colorSensor;
@@ -95,7 +95,7 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
     VuforiaLocalizer vuforia;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -103,8 +103,7 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
     static final double     DRIVE_SPEED             = 0.1 ;     // Nominal speed for better accuracy.
-    static final double     TURN_SPEED              = 0.3;     // Nominal half speed for better accuracy.
-
+    static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
     static final double     P_DRIVE_COEFF           = 0.15;     // Larger is more responsive, but also less stable
@@ -152,7 +151,7 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "imu 1");
         colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         colorSensor.enableLed(true);
         imu.initialize(parameters);
@@ -163,9 +162,11 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
             sleep(50);
             idle();
         } */
+        relicTrackables.activate(); //activate before start button ispressed
 
         telemetry.addData(">", "Robot Ready.");    //
         telemetry.update();
+
 
         waitForStart();
 
@@ -175,6 +176,7 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+
 
         // Wait for the game to start (Display GyroBlueTeam1 value), and reset gyro before we move..
         while (!isStarted()) {
@@ -189,6 +191,17 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
         // Put a hold after each turn
 
         while (opModeIsActive()) {
+
+            grab();
+            sleep(250);
+            liftUp();
+            sleep(250);
+            armDown();
+            sleep(750);
+            jewel();
+            sleep(750);
+            armUp();
+            gyroDrive(.10,2,0);
 
             /**
              * See if any of the instances of {@link relicTemplate} are currently visible.
@@ -213,20 +226,12 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
                 if(vuMark == RelicRecoveryVuMark.CENTER){
                     telemetry.addLine("Going Center");
 
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,35,0);
+                    gyroDrive(.20,-35,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,3.5,-90);
+                    gyroDrive(.10,10,-90);
                     release();
+                    gyroDrive(.10,-3,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -235,20 +240,12 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addLine("Going Left");
 
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,42,0);
+                    gyroDrive(.20,-27,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,3.5,90);
+                    gyroDrive(.10,10,90);
                     release();
+                    gyroDrive(.10,-3,90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -257,20 +254,12 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addLine("Going Right");
 
-                    grab();
-                    sleep(500);
-                    liftUp();
-                    sleep(500);
-                    armDown();
-                    sleep(1000);
-                    jewel();
-                    sleep(1000);
-                    armUp();
-                    gyroDrive(.20,27,0);
+                    gyroDrive(.20,-42,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,3.5,90);
+                    gyroDrive(.10,10,90);
                     release();
+                    gyroDrive(.10,-3, 90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -280,25 +269,20 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
             else {
                 telemetry.addData("VuMark", "not visible");
 
-                grab();
-                sleep(500);
-                liftUp();
-                sleep(500);
-                armDown();
-                sleep(1000);
-                jewel();
-                sleep(1000);
-                armUp();
-                gyroDrive(DRIVE_SPEED,33,0);
+
+                gyroDrive(.20,-28,0);
                 gyroTurn(TURN_SPEED,-90);
                 gyroHold(TURN_SPEED,-90,.5);
-                gyroDrive(DRIVE_SPEED,3.5,-90);
+                gyroDrive(.10,10,90);
                 release();
+                gyroDrive(.10,-3,90);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
+
             }
             telemetry.update();
+            sleep(15000);
         }
     }
 
@@ -335,7 +319,7 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            backLeftTarget = robot.backLeft.getTargetPosition() + moveCounts;
+            backLeftTarget = robot.backLeft.getCurrentPosition() + moveCounts;
             frontLeftTarget = robot.frontLeft.getCurrentPosition() + moveCounts;
             backRightTarget = robot.backRight.getCurrentPosition() + moveCounts;
             frontRightTarget = robot.frontRight.getCurrentPosition() + moveCounts;
@@ -461,14 +445,14 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
     public void jewel() {
 
         if (colorSensor.blue() > colorSensor.red()) {
-            gyroTurn(TURN_SPEED, 10);
-            gyroHold(TURN_SPEED, 10, 0.5);
+            gyroTurn(TURN_SPEED, -10);
+            gyroHold(TURN_SPEED, -10, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
         } else {
-            gyroTurn(TURN_SPEED, -10);
-            gyroHold(TURN_SPEED, -10, 0.5);
+            gyroTurn(TURN_SPEED, 10);
+            gyroHold(TURN_SPEED, 10, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
@@ -476,31 +460,31 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm2.setPosition(0);
+        robot.jewelArm2.setPosition(0.7);
     }
     public void armUp(){
-        robot.jewelArm2.setPosition(1);
+        robot.jewelArm2.setPosition(0);
     }
     public void grab() {
-        robot.s1.setPosition(0.5);
-        robot.s2.setPosition(0.5);
+        robot.s1.setPosition(0);
+        robot.s2.setPosition(0);
     }
     public void release(){
-        robot.s1.setPosition(1);
-        robot.s2.setPosition(1);
+        robot.s1.setPosition(.5);
+        robot.s2.setPosition(.5);
     }
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        robot.lift.setTargetPosition(750); //1120
+        robot.lift.setTargetPosition(1500);
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         //set power
-        robot.lift.setPower(0.1);
+        robot.lift.setPower(1);
 
         while(opModeIsActive() && robot.lift.isBusy()){
             telemetry.addData("Path2",  "Running at %7d", robot.lift.getCurrentPosition());
@@ -510,6 +494,98 @@ public class VuforiaRedTeam1Flip extends LinearOpMode {
         }
         robot.lift.setPower(0);
         robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+    public void intake(){
+        //run intake
+        //check if glyph is taken in
+        //if not, run straight back
+        //if so, run to position where glyph isn't position in box
+    }
+    public void StrafeRight(double power, int distance){
+
+
+        // reset encoders
+        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        robot.frontLeft.setTargetPosition(distance * 360);
+        robot.frontRight.setTargetPosition(-distance * 360);
+        robot.backRight.setTargetPosition(distance * 360);
+        robot.backLeft.setTargetPosition(-distance * 360);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // at 12 Volts battery, .4 speed, 1240 sleep time, turns approx. 90 deg
+
+        robot.frontLeft.setPower(power);
+        robot.frontRight.setPower(power);
+        robot.backLeft.setPower(power);
+        robot.backRight.setPower(power);
+
+        while(opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
+            telemetry.addData("Strafing Right",  "Running to %7d", distance);
+            telemetry.addData("Front Left",  "Running at %7d", robot.frontLeft.getCurrentPosition());
+            telemetry.addData("Front Right",  "Running at %7d", robot.frontRight.getCurrentPosition());
+            telemetry.addData("Back Right",  "Running at %7d", robot.backRight.getCurrentPosition());
+            telemetry.addData("Back Left",  "Running at %7d", robot.backLeft.getCurrentPosition());
+            telemetry.update();
+
+            idle();
+        }
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+    public void StrafeLeft(double power, int distance){
+
+
+        // reset encoders
+        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        robot.frontLeft.setTargetPosition(-distance * 360);
+        robot.frontRight.setTargetPosition(distance * 360);
+        robot.backRight.setTargetPosition(-distance * 360);
+        robot.backLeft.setTargetPosition(distance * 360);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // at 12 Volts battery, .4 speed, 1240 sleep time, turns approx. 90 deg
+
+        robot.frontLeft.setPower(power);
+        robot.frontRight.setPower(power);
+        robot.backLeft.setPower(power);
+        robot.backRight.setPower(power);
+
+        while(opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()){
+            telemetry.addData("Strafing Right",  "Running to %7d", distance);
+            telemetry.addData("Front Left",  "Running at %7d", robot.frontLeft.getCurrentPosition());
+            telemetry.addData("Front Right",  "Running at %7d", robot.frontRight.getCurrentPosition());
+            telemetry.addData("Back Right",  "Running at %7d", robot.backRight.getCurrentPosition());
+            telemetry.addData("Back Left",  "Running at %7d", robot.backLeft.getCurrentPosition());
+            telemetry.update();
+
+            idle();
+        }
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 

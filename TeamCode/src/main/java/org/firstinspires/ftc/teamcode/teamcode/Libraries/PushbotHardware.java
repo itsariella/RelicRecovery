@@ -29,13 +29,10 @@
 
 package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.teamcode.Sensors.ColorProgram;
 
 /**
  * This is NOT an opmode.
@@ -62,12 +59,16 @@ public class PushbotHardware
     public DcMotor backLeft;
     public DcMotor backRight;
     public DcMotor lift;
+    public DcMotor intakeLeft;
+    public DcMotor intakeRight;
 
     //Servos
     public Servo jewelArm;
     public Servo jewelArm2;
     public Servo s1;
     public Servo s2;
+    public Servo catcherLeft;
+    public Servo catcherRight;
 
     public int vuMarkStatus;
 
@@ -86,17 +87,23 @@ public class PushbotHardware
         frontLeft  = hardwareMap.dcMotor.get("frontLeft");
         backRight  = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
+        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
+        intakeRight = hardwareMap.dcMotor.get("intakeRight");
+
         lift = hardwareMap.dcMotor.get("lift");
 
-        jewelArm = hardwareMap.servo.get("arm");
         jewelArm2 = hardwareMap.servo.get("arm2");
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
+        catcherLeft = hardwareMap.servo.get("catcherLeft");
+        catcherRight = hardwareMap.servo.get("catcherRight");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         s2.setDirection(Servo.Direction.REVERSE);
         jewelArm2.setDirection(Servo.Direction.REVERSE);
+        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        catcherLeft.setDirection(Servo.Direction.REVERSE);
 
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 

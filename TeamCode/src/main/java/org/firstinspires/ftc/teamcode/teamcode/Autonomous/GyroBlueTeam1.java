@@ -31,7 +31,6 @@ package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -40,11 +39,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorBNO055IMU;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
@@ -56,9 +50,6 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  *
  * The code REQUIRES that you DO have encoders on the wheels,
  *   otherwise you would use: PushbotAutoDriveByTime;
- *
- *  This code ALSO requires that you have a Modern Robotics I2C gyro with the name "gyro"
- *   otherwise you would use: PushbotAutoDriveByEncoder;
  *
  *  This code requires that the drive Motors have been configured such that a positive
  *  power command moves them forward, and causes the encoders to count UP.
@@ -82,7 +73,8 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 //hi
-@Autonomous(name="Gyro Blue 1", group="Pushbot")
+@Autonomous(name="Gyro Blue 1 New", group="Pushbot")
+@Disabled
 public class GyroBlueTeam1 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -90,7 +82,7 @@ public class GyroBlueTeam1 extends LinearOpMode {
     PushbotHardware robot   = new PushbotHardware();   // Use a Pushbot's hardware
     BNO055IMU imu;                   // Additional GyroBlueTeam1 device
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1680 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -128,10 +120,9 @@ public class GyroBlueTeam1 extends LinearOpMode {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "AdafruitIMUCalibration.json"; // see the calibration sample opmode
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
         parameters.loggingEnabled      = true;
         parameters.loggingTag          = "IMU";
-
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         parameters.mode = BNO055IMU.SensorMode.IMU;
 
@@ -176,7 +167,6 @@ public class GyroBlueTeam1 extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
 
-
         sleep(500);
         grab();
         sleep(500);
@@ -187,17 +177,15 @@ public class GyroBlueTeam1 extends LinearOpMode {
         jewel();
         sleep(1000);
         armUp();
-        gyroDrive(.10,15,0);
-        encoderDrive(.2,12);
-        /*gyroTurn(TURN_SPEED,90);
-        gyroHold(TURN_SPEED,90,.5);
-        gyroDrive(.10,3.5,90);
-        release();*/
+        gyroDrive(.10,-36,0);
+        gyroTurn(TURN_SPEED,-90);
+        gyroHold(TURN_SPEED,-90,.5);
+        gyroDrive(.10,9,-90);
+        release();
 
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
-
     }
 
 
@@ -359,14 +347,14 @@ public class GyroBlueTeam1 extends LinearOpMode {
     public void jewel() {
 
         if (colorSensor.blue() > colorSensor.red()) {
-            gyroTurn(TURN_SPEED, 15);
-            gyroHold(TURN_SPEED, 15, 0.5);
+            gyroTurn(TURN_SPEED, -15);
+            gyroHold(TURN_SPEED, -15, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
         } else {
-            gyroTurn(TURN_SPEED, -15);
-            gyroHold(TURN_SPEED, -15, 0.5);
+            gyroTurn(TURN_SPEED, 15);
+            gyroHold(TURN_SPEED, 15, 0.5);
             armUp();
             gyroTurn(TURN_SPEED, 0);
             gyroHold(TURN_SPEED, 0, 1);
@@ -374,14 +362,15 @@ public class GyroBlueTeam1 extends LinearOpMode {
     }
 
     public void armDown(){
-        robot.jewelArm.setPosition(0);
+        robot.jewelArm2.setPosition(0);
     }
+
+
     public void armUp(){
-        robot.jewelArm.setPosition(1);
+        robot.jewelArm2.setPosition(1);
     }
 
     public void grab() {
-
         robot.s1.setPosition(0.5);
         robot.s2.setPosition(0.5);
     }
@@ -395,7 +384,7 @@ public class GyroBlueTeam1 extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //target position
-        robot.lift.setTargetPosition(750); //1120
+        robot.lift.setTargetPosition(1120); //1120
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -486,65 +475,6 @@ public class GyroBlueTeam1 extends LinearOpMode {
      */
     public double getSteer(double error, double PCoeff) {
         return Range.clip(error * PCoeff, -1, 1);
-    }
-
-    public void encoderDrive(double power, int distance ) {
-
-        int backLeftTarget;
-        int frontLeftTarget;
-        int backRightTarget;
-        int frontRightTarget;
-
-
-        // Determine new target position, and pass to motor controller
-        int movecounts = (int)(distance * COUNTS_PER_INCH);
-        backLeftTarget = robot.backLeft.getCurrentPosition() + movecounts;
-        frontLeftTarget = robot.frontLeft.getCurrentPosition() + movecounts;
-        backRightTarget = robot.backRight.getCurrentPosition() + movecounts;
-        frontRightTarget = robot.frontRight.getCurrentPosition() + movecounts;
-
-        // Set Target and Turn On RUN_TO_POSITION
-        robot.frontLeft.setTargetPosition(frontLeftTarget);
-        robot.backLeft.setTargetPosition(backLeftTarget);
-        robot.frontRight.setTargetPosition(frontRightTarget);
-        robot.backRight.setTargetPosition(backRightTarget);
-
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while(opModeIsActive() && robot.frontLeft.isBusy() && robot.frontRight.isBusy() && robot.backLeft.isBusy() && robot.backRight.isBusy()) {
-            telemetry.addData("Driving Backwards", "Running to %7d", distance);
-            telemetry.addData("Path2", "Running at %7d", robot.frontLeft.getCurrentPosition());
-            telemetry.addData("Path3", "Running at %7d", robot.frontRight.getCurrentPosition());
-            telemetry.addData("Path4", "Running at %7d", robot.backRight.getCurrentPosition());
-            telemetry.addData("Path5", "Running at %7d", robot.backLeft.getCurrentPosition());
-            telemetry.update();
-
-            idle();
-        }
-
-        power = Range.clip(Math.abs(power), 0.0, 1.0);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(power);
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(power);
-
-        robot.StopDriving();
-
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot. backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-    }
-
-    public void StopDriving(){
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backRight.setPower(0);
-        robot.backLeft.setPower(0);
     }
 
 }

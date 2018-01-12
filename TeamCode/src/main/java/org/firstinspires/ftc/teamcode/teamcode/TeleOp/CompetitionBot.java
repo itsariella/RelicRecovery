@@ -20,10 +20,14 @@ public class CompetitionBot extends OpMode {
     public DcMotor intakeLeft;
 
 
-    public Servo s1;
-    public Servo s2;
+    public Servo s1; //right?
+    public Servo s2; //left?
     public Servo arm;
+
     public Servo catcherLeft;
+    public Servo catcherRight;
+
+    boolean setFullPosition = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -39,17 +43,19 @@ public class CompetitionBot extends OpMode {
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
 
-
         s1 = hardwareMap.servo.get("s1");
         s2 = hardwareMap.servo.get("s2");
-        arm = hardwareMap.servo.get("arm");
+        arm = hardwareMap.servo.get("arm2");
+
         catcherLeft = hardwareMap.servo.get("catcherLeft");
+        catcherRight = hardwareMap.servo.get("catcherRight");
+
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        intakeRight.setDirection(DcMotor.Direction.REVERSE);
+        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        catcherLeft.setDirection(Servo.Direction.REVERSE);
 
         s2.setDirection(Servo.Direction.REVERSE);
 
@@ -85,8 +91,7 @@ public class CompetitionBot extends OpMode {
         double intakeRightPower;
         double intakeLeftPower;
 
-
-
+        // Gamepad 1 controls
         if (Math.abs(gamepad1.left_stick_x) > .1)
             x = gamepad1.left_stick_x;
         else
@@ -102,75 +107,88 @@ public class CompetitionBot extends OpMode {
         else
             z = 0;
 
-        /*if (gamepad2.right_trigger > 0.1)
-            liftPower = gamepad2.right_trigger;
-        else if (gamepad2.left_trigger > 0.1)
-            liftPower = -gamepad2.left_trigger;
-        else
-            liftPower = 0;
-         */
-        if (Math.abs(gamepad2.left_stick_y) > .1 )
-            liftPower = gamepad2.left_stick_y;
-
-        if (gamepad2.right_trigger > 0.1) {
-            s1.setPosition(.5);
-            s2.setPosition(.5);
-        }
-
-        if (gamepad2.left_trigger > 0.1) {
-            s1.setPosition(1);
-            s2.setPosition(1);
-        }
-
         if (gamepad1.right_trigger > .1) {
             intakeRightPower = gamepad1.right_trigger;
+            //catcherLeft.setPosition(0); //CATCH THE GLYPH
+            //catcherRight.setPosition(0);
+
         } else if (gamepad1.right_bumper) {
             intakeRightPower = -0.7;
         } else {
             intakeRightPower = 0;
         }
 
-        if (gamepad1.left_trigger > .1) {
+        if (gamepad1.left_trigger > .1) { // IF USING INTAKE
             intakeLeftPower = gamepad1.left_trigger;
-            catcherLeft.setPosition(1);
-        }
-        else if (gamepad1.left_bumper)
-        {
-            intakeLeftPower = -0.7;
-        }
-        else {
+        } else if (gamepad1.left_bumper) {
+            intakeLeftPower = -0.7; // 70 percent speed
+        } else {
             intakeLeftPower = 0;
         }
 
-        if(gamepad2.x) {
-            arm.setPosition(1);
+        if (gamepad1.x) {
+            arm.setPosition(0.6);
         }
 
-        if(gamepad2.y){
+        if (gamepad1.y) {
             arm.setPosition(0);
         }
 
-        if (gamepad1.x) {
-            catcherLeft.setPosition(1);
+        // Gamepad 2 controls
+        if (Math.abs(gamepad2.left_stick_y) > .1) {
+            liftPower = gamepad2.left_stick_y;
         }
-        if (gamepad1.y) {
-            catcherLeft.setPosition(0);
+        if (gamepad2.y) {
+            setFullPosition = true;
+        }
+        if (gamepad2.x) {
+            setFullPosition = false;
         }
 
-        lift.setPower(liftPower);
-        intakeLeft.setPower(-intakeLeftPower);
-        intakeRight.setPower(-intakeRightPower);
-        frontLeft.setPower(y+x+z); //changed nov 20 from .4 to full speed
-        backLeft.setPower(y-x+z);
-        frontRight.setPower(y-x-z);
-        backRight.setPower(y+x-z);
-}
+        if (gamepad2.right_trigger > 0.1) {
+            s1.setPosition(0); // glyph arms close
+            s2.setPosition(0);
+
+        }
+
+        if (gamepad2.left_trigger > 0.1) {
+
+            if (setFullPosition == true) {
+                s1.setPosition(0.2);
+                s2.setPosition(0.2); // open glyph arms
+
+            } else {
+                s1.setPosition(.3);
+                s2.setPosition(.3);
+            }
+        }
+
+        if (gamepad2.right_bumper) {
+            catcherLeft.setPosition(1); // use catchers
+            catcherRight.setPosition(1);
+        }
+        if (gamepad2.left_bumper) {
+            catcherLeft.setPosition(0); // move away catchers
+            catcherRight.setPosition(0);
+        }
+
+
+        // Set powers
+            lift.setPower(liftPower);
+            intakeLeft.setPower(-intakeLeftPower * .70);
+            intakeRight.setPower(-intakeRightPower * .70);
+            frontLeft.setPower(y + x + z);
+            backLeft.setPower(y - x + z);
+            frontRight.setPower(y - x - z);
+            backRight.setPower(y + x - z);
+        }
 
     /*
      * Code to run ONCE after the driver hits STOP
      */
-    @Override
-    public void stop(){
+        @Override
+        public void stop () {
+        }
+
     }
 
-}
