@@ -240,11 +240,11 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     sleep(1000);
                     stopIntake();
                     gyroDrive(DRIVE_SPEED,-15,-90);
+                    sleep(1000);
                     grab();
+                    sleep(1000);
                     gyroDrive(DRIVE_SPEED,16,-90);
                     gyroDrive(DRIVE_SPEED,-5,-90);
-
-
 
                     sleep(15000);
 
@@ -264,7 +264,9 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     sleep(1000);
                     stopIntake();
                     gyroDrive(DRIVE_SPEED,-15,-90);
+                    sleep(1000);
                     grab();
+                    sleep(1000);
                     gyroDrive(DRIVE_SPEED,16,-90);
                     gyroDrive(DRIVE_SPEED,-5,-90);
 
@@ -284,7 +286,9 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     sleep(1000);
                     stopIntake();
                     gyroDrive(DRIVE_SPEED,-15,-90);
+                    sleep(1000);
                     grab();
+                    sleep(1000);
                     gyroDrive(DRIVE_SPEED,16,-90);
                     gyroDrive(DRIVE_SPEED,-5,-90);
 
@@ -305,7 +309,9 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                 sleep(1000);
                 stopIntake();
                 gyroDrive(DRIVE_SPEED,-15,-90);
+                sleep(1000);
                 grab();
+                sleep(1000);
                 gyroDrive(DRIVE_SPEED,16,-90);
                 gyroDrive(DRIVE_SPEED,-5,-90);
 

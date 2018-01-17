@@ -59,8 +59,6 @@ public class CompetitionBot extends OpMode {
 
         s2.setDirection(Servo.Direction.REVERSE);
 
-        s1.setPosition(0);
-        s2.setPosition(0);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
     }
@@ -138,12 +136,12 @@ public class CompetitionBot extends OpMode {
         if (Math.abs(gamepad2.left_stick_y) > .1) {
             liftPower = gamepad2.left_stick_y;
         }
-        if (gamepad2.y) {
+        /*if (gamepad2.y) {
             setFullPosition = true;
         }
         if (gamepad2.x) {
             setFullPosition = false;
-        }
+        }*/
 
         if (gamepad2.right_trigger > 0.1) {
             s1.setPosition(0); // glyph arms close
@@ -152,24 +150,21 @@ public class CompetitionBot extends OpMode {
         }
 
         if (gamepad2.left_trigger > 0.1) {
-
-            if (setFullPosition == true) {
                 s1.setPosition(0.2);
                 s2.setPosition(0.2); // open glyph arms
-
-            } else {
-                s1.setPosition(.3);
-                s2.setPosition(.3);
-            }
+        }
+        if(gamepad2.y){
+                s1.setPosition(.1);
+                s2.setPosition(.1);
         }
 
         if (gamepad2.right_bumper) {
-            catcherLeft.setPosition(1); // use catchers
-            catcherRight.setPosition(1);
+            catcherLeft.setPosition(0); // use catchers
+            catcherRight.setPosition(0.02);
         }
         if (gamepad2.left_bumper) {
-            catcherLeft.setPosition(0); // move away catchers
-            catcherRight.setPosition(0);
+            catcherLeft.setPosition(1); // move away catchers
+            catcherRight.setPosition(1);
         }
 
 
