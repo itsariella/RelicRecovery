@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static android.os.SystemClock.sleep;
+
 @TeleOp(name="CompetitionBot", group="Pushbot")
 public class CompetitionBot extends OpMode {
 
@@ -20,14 +22,15 @@ public class CompetitionBot extends OpMode {
     public DcMotor intakeLeft;
 
 
-    public Servo s1; //right?
-    public Servo s2; //left?
+    public Servo firstStage1; //right?
+    public Servo firstStage2; //left?
+    public Servo secondStage1;
+    public Servo secondStage2;
     public Servo arm;
 
     public Servo catcherLeft;
     public Servo catcherRight;
-
-    boolean setFullPosition = false;
+    boolean firstStageClosed = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -43,8 +46,10 @@ public class CompetitionBot extends OpMode {
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
 
-        s1 = hardwareMap.servo.get("s1");
-        s2 = hardwareMap.servo.get("s2");
+        firstStage1 = hardwareMap.servo.get("firstStage1");
+        firstStage2 = hardwareMap.servo.get("firstStage2");
+        secondStage1 = hardwareMap.servo.get("secondStage1");
+        secondStage2 = hardwareMap.servo.get("secondStage2");
         arm = hardwareMap.servo.get("arm2");
 
         catcherLeft = hardwareMap.servo.get("catcherLeft");
@@ -57,7 +62,8 @@ public class CompetitionBot extends OpMode {
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         catcherLeft.setDirection(Servo.Direction.REVERSE);
 
-        s2.setDirection(Servo.Direction.REVERSE);
+        firstStage2.setDirection(Servo.Direction.REVERSE);
+        secondStage2.setDirection(Servo.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -89,6 +95,7 @@ public class CompetitionBot extends OpMode {
         double intakeRightPower;
         double intakeLeftPower;
 
+
         // Gamepad 1 controls
         if (Math.abs(gamepad1.left_stick_x) > .1)
             x = gamepad1.left_stick_x;
@@ -105,10 +112,13 @@ public class CompetitionBot extends OpMode {
         else
             z = 0;
 
+        if(gamepad1.right_trigger > .1 && gamepad1.left_trigger >.1){
+            catcherLeft.setPosition(0);
+            catcherRight.setPosition(0.01);
+        }
+
         if (gamepad1.right_trigger > .1) {
             intakeRightPower = gamepad1.right_trigger;
-            //catcherLeft.setPosition(0); //CATCH THE GLYPH
-            //catcherRight.setPosition(0);
 
         } else if (gamepad1.right_bumper) {
             intakeRightPower = -0.7;
@@ -132,6 +142,16 @@ public class CompetitionBot extends OpMode {
             arm.setPosition(0);
         }
 
+        if (gamepad1.a) {
+            catcherLeft.setPosition(0); // use catchers
+            catcherRight.setPosition(0.01);
+        }
+        if (gamepad1.b) {
+            catcherLeft.setPosition(1); // move away catchers
+            catcherRight.setPosition(1);
+        }
+
+
         // Gamepad 2 controls
         if (Math.abs(gamepad2.left_stick_y) > .1) {
             liftPower = gamepad2.left_stick_y;
@@ -144,29 +164,66 @@ public class CompetitionBot extends OpMode {
         }*/
 
         if (gamepad2.right_trigger > 0.1) {
-            s1.setPosition(0); // glyph arms close
-            s2.setPosition(0);
+            firstStage1.setPosition(1); // first stage glyph arms close
+            firstStage2.setPosition(1);
+            firstStageClosed = true;
+        }
+
+        if(gamepad2.right_bumper && firstStageClosed) {
+            secondStage1.setPosition(1);
+            secondStage2.setPosition(1); //second stage glyph arms close
 
         }
 
         if (gamepad2.left_trigger > 0.1) {
-                s1.setPosition(0.2);
-                s2.setPosition(0.2); // open glyph arms
+            firstStage1.setPosition(0.9);
+            firstStage2.setPosition(0.9); // open glyph arms
+            secondStage1.setPosition(0.8);
+            secondStage2.setPosition(0.8);
+            firstStageClosed = false;
         }
-        if(gamepad2.y){
-                s1.setPosition(.1);
-                s2.setPosition(.1);
+        if(gamepad2.left_bumper){
+            firstStage1.setPosition(.7); //glyph arms open
+            firstStage2.setPosition(.7);
+            secondStage1.setPosition(.6);
+            secondStage2.setPosition(.6);
+            firstStageClosed = false;
         }
 
-        if (gamepad2.right_bumper) {
+        if (gamepad2.dpad_up) {
             catcherLeft.setPosition(0); // use catchers
-            catcherRight.setPosition(0.02);
+            catcherRight.setPosition(0.01);
         }
-        if (gamepad2.left_bumper) {
+        if (gamepad2.dpad_down) {
             catcherLeft.setPosition(1); // move away catchers
             catcherRight.setPosition(1);
         }
 
+        if (gamepad2.a){
+
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            //target position
+            lift.setTargetPosition(-2750);
+
+            //set mode
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            //set power
+            lift.setPower(1);
+
+            while(lift.isBusy()){
+                frontLeft.setPower(y + x + z);
+                backLeft.setPower(y - x + z);
+                frontRight.setPower(y - x - z);
+                backRight.setPower(y + x - z);
+                telemetry.addData("Path2",  "Running at %7d", lift.getCurrentPosition());
+                telemetry.update();
+
+            }
+            lift.setPower(0);
+            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
         // Set powers
             lift.setPower(liftPower);

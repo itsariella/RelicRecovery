@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -85,7 +85,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Vuforia Blue 2", group="Pushbot")
-
+@Disabled
 public class VuforiaBlueTeam2 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -472,12 +472,12 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
         robot.jewelArm2.setPosition(1);
     }
     public void grab() {
-        robot.s1.setPosition(0);
-        robot.s2.setPosition(0);
+        robot.firstStage1.setPosition(0);
+        robot.firstStage2.setPosition(0);
     }
     public void release(){
-        robot.s1.setPosition(0.4);
-        robot.s2.setPosition(0.4);
+        robot.firstStage1.setPosition(0.4);
+        robot.firstStage2.setPosition(0.4);
     }
     public void setUp(){
         robot.intakeLeft.setPower(1);

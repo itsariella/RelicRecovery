@@ -470,12 +470,12 @@ public class NewRedTeam1 extends LinearOpMode {
         robot.jewelArm2.setPosition(0);
     }
     public void grab() {
-        robot.s1.setPosition(0);
-        robot.s2.setPosition(0);
+        robot.firstStage1.setPosition(0);
+        robot.firstStage2.setPosition(0);
     }
     public void release(){
-        robot.s1.setPosition(.5);
-        robot.s2.setPosition(.5);
+        robot.firstStage1.setPosition(.5);
+        robot.firstStage2.setPosition(.5);
     }
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

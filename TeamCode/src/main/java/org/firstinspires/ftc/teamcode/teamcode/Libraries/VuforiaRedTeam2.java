@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.teamcode.Libraries;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -471,12 +471,12 @@ public class VuforiaRedTeam2 extends LinearOpMode {
         robot.jewelArm2.setPosition(1);
     }
     public void grab() {
-        robot.s1.setPosition(0.5);
-        robot.s2.setPosition(0.5);
+        robot.firstStage1.setPosition(0.5);
+        robot.firstStage2.setPosition(0.5);
     }
     public void release(){
-        robot.s1.setPosition(1);
-        robot.s2.setPosition(1);
+        robot.firstStage1.setPosition(1);
+        robot.firstStage2.setPosition(1);
     }
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -501,6 +501,8 @@ public class VuforiaRedTeam2 extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
+
+
 
     /**
      * Perform one cycle of closed loop heading control.

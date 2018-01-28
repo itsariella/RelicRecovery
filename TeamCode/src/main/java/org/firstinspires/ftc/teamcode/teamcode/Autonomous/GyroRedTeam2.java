@@ -374,13 +374,13 @@ public class GyroRedTeam2 extends AutoEncoder {
         robot.jewelArm.setPosition(1);
     }
     public void grab(){
-        robot.s1.setPosition(0);
-        robot.s2.setPosition(0);
+        robot.firstStage1.setPosition(0);
+        robot.firstStage2.setPosition(0);
     }
 
     public void release(){
-        robot.s1.setPosition(1);
-        robot.s2.setPosition(1);
+        robot.firstStage1.setPosition(1);
+        robot.firstStage2.setPosition(1);
     }
     public void liftUp(){
         robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
