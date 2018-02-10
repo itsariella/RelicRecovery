@@ -189,11 +189,7 @@ public class CompetitionBot extends OpMode {
             //set power
             lift.setPower(1);
 
-            while(lift.isBusy()){
-                frontLeft.setPower(y + x + z);
-                backLeft.setPower(y - x + z);
-                frontRight.setPower(y - x - z);
-                backRight.setPower(y + x - z);
+            if(lift.isBusy()){ //used to be while loop
                 telemetry.addData("Path2",  "Running at %7d", lift.getCurrentPosition());
                 telemetry.update();
 

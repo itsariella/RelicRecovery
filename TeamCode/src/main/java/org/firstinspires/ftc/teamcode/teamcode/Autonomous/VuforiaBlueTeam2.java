@@ -196,7 +196,7 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
             sleep(1500);
             armDown();
             sleep(750);
-            jewel();
+            knockJewel();
             sleep(750);
             armUp();
 
@@ -223,7 +223,7 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
                 if(vuMark == RelicRecoveryVuMark.CENTER){
                     telemetry.addLine("Going Center"); //updated
 
-                    gyroDrive(0.10,24,0); //drive towards box
+                    gyroDrive(DRIVE_SPEED,24,0); //drive towards box
                     gyroTurn(TURN_SPEED,-90); //turn right
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(DRIVE_SPEED,12,90);//drive towards center of the box
@@ -286,7 +286,6 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
             }
             else {
                 telemetry.addData("VuMark", "not visible");
-
 
                 gyroDrive(0.10,24,0); //drive towards box
                 gyroTurn(TURN_SPEED,-90); //turn right
@@ -467,7 +466,7 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
         robot.backRight.setPower(0);
     }
 
-    public void jewel() {
+    public void knockJewel() {
 
         if (colorSensor.blue() > colorSensor.red()) {
             gyroTurn(TURN_SPEED, 10);

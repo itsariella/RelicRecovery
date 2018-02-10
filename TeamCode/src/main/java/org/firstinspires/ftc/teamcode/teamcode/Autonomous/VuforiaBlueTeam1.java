@@ -190,7 +190,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
             sleep(1500);
             armDown();
             sleep(750);
-            jewel();
+            knockJewel();
             sleep(750);
             armUp();
 
@@ -453,7 +453,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
         robot.backRight.setPower(0);
     }
 
-    public void jewel() {
+    public void knockJewel() {
 
         if (colorSensor.blue() > colorSensor.red()) {
             gyroTurn(TURN_SPEED, 10);
