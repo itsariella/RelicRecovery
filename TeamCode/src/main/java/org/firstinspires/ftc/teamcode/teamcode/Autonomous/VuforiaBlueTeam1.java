@@ -155,12 +155,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
         colorSensor.enableLed(true);
         imu.initialize(parameters);
 
-
-        // make sure the gyro is calibrated before continuing
-        /*while (!isStopRequested() && gyro.isCalibrating())  {
-            sleep(50);
-            idle();
-        } */
         relicTrackables.activate(); //activate before start button ispressed
 
         telemetry.addData(">", "Robot Ready.");    //
@@ -191,9 +185,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            //grab();
-            //sleep(250);
-            liftCombo();
+            openArms();
             moveOutCatchers();
             sleep(1500);
             armDown();
@@ -237,10 +229,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                     gyroDrive(DRIVE_SPEED,-8,-90); //drive away from box
                     gyroDrive(0.1,9,-90); //push glyph back in
                     gyroDrive(DRIVE_SPEED,-7,-90); //back out
-                    //grab();
-                    //sleep(1000);
-                    //gyroDrive(DRIVE_SPEED,16,-90);
-                    //gyroDrive(DRIVE_SPEED,-5,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -260,10 +248,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                     gyroDrive(DRIVE_SPEED,-8,-90); //drive away from box
                     gyroDrive(0.1,9,-90); //push glyph back in
                     gyroDrive(DRIVE_SPEED,-7,-90); //back out
-                    //grab();
-                    //sleep(1000);
-                    //gyroDrive(DRIVE_SPEED,16,-90);
-                    //gyroDrive(DRIVE_SPEED,-5,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -283,10 +267,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                     gyroDrive(DRIVE_SPEED,-8,-90); //drive away from box
                     gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
                     gyroDrive(DRIVE_SPEED,-7,-90); //back out
-                    //grab();
-                    //sleep(1000);
-                    //gyroDrive(DRIVE_SPEED,16,-90);
-                    //gyroDrive(DRIVE_SPEED,-5,-90);
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -307,10 +287,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                 gyroDrive(DRIVE_SPEED,-8,-90); //drive away from box
                 gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
                 gyroDrive(DRIVE_SPEED,-7,-90); //back out
-                //grab();
-                //sleep(1000);
-                //gyroDrive(DRIVE_SPEED,16,-90);
-                //gyroDrive(DRIVE_SPEED,-5,-90);
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
@@ -516,8 +492,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
 
         //set mode
         robot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
+        
         //set power
         robot.lift.setPower(1);
 
@@ -550,20 +525,6 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
     public void openArms(){
         robot.firstStage1.setPosition(.7); //glyph arms open
         robot.firstStage2.setPosition(.7);
-        //robot.secondStage1.setPosition(.6);
-        //robot.secondStage2.setPosition(.6);
-    }
-
-    public void closeFirstStage(){
-
-    }
-
-    public void liftCombo(){
-        //lift(2750);
-        //sleep(1000);
-        openArms();
-        //lift(-2750);
-
     }
 
     /**
