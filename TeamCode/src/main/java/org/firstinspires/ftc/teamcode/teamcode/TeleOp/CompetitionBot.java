@@ -1,4 +1,4 @@
-
+// This is the OpMode we use during Tele-Op
 package org.firstinspires.ftc.teamcode.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -24,13 +24,10 @@ public class CompetitionBot extends OpMode {
 
     public Servo firstStage1; //right?
     public Servo firstStage2; //left?
-    public Servo secondStage1;
-    public Servo secondStage2;
     public Servo arm;
 
     public Servo catcherLeft;
     public Servo catcherRight;
-    boolean firstStageClosed = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -48,22 +45,17 @@ public class CompetitionBot extends OpMode {
 
         firstStage1 = hardwareMap.servo.get("firstStage1");
         firstStage2 = hardwareMap.servo.get("firstStage2");
-        secondStage1 = hardwareMap.servo.get("secondStage1");
-        secondStage2 = hardwareMap.servo.get("secondStage2");
         arm = hardwareMap.servo.get("arm2");
-
         catcherLeft = hardwareMap.servo.get("catcherLeft");
         catcherRight = hardwareMap.servo.get("catcherRight");
-
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
-        catcherLeft.setDirection(Servo.Direction.REVERSE);
 
+        catcherLeft.setDirection(Servo.Direction.REVERSE);
         firstStage2.setDirection(Servo.Direction.REVERSE);
-        secondStage2.setDirection(Servo.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -94,7 +86,6 @@ public class CompetitionBot extends OpMode {
         double liftPower = 0;
         double intakeRightPower;
         double intakeLeftPower;
-
 
         // Gamepad 1 controls
         if (Math.abs(gamepad1.left_stick_x) > .1)
@@ -151,7 +142,6 @@ public class CompetitionBot extends OpMode {
             catcherRight.setPosition(1);
         }
 
-
         // Gamepad 2 controls
         if (Math.abs(gamepad2.left_stick_y) > .1) {
             liftPower = gamepad2.left_stick_y;
@@ -166,28 +156,15 @@ public class CompetitionBot extends OpMode {
         if (gamepad2.right_trigger > 0.1) {
             firstStage1.setPosition(1); // first stage glyph arms close
             firstStage2.setPosition(1);
-            firstStageClosed = true;
-        }
-
-        if(gamepad2.right_bumper && firstStageClosed) {
-            secondStage1.setPosition(1);
-            secondStage2.setPosition(1); //second stage glyph arms close
-
         }
 
         if (gamepad2.left_trigger > 0.1) {
             firstStage1.setPosition(0.9);
             firstStage2.setPosition(0.9); // open glyph arms
-            secondStage1.setPosition(0.8);
-            secondStage2.setPosition(0.8);
-            firstStageClosed = false;
         }
         if(gamepad2.left_bumper){
             firstStage1.setPosition(.7); //glyph arms open
             firstStage2.setPosition(.7);
-            secondStage1.setPosition(.6);
-            secondStage2.setPosition(.6);
-            firstStageClosed = false;
         }
 
         if (gamepad2.dpad_up) {

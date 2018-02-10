@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teamcode.Libraries;
+package org.firstinspires.ftc.teamcode.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -85,7 +85,6 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Vuforia Blue 2", group="Pushbot")
-@Disabled
 public class VuforiaBlueTeam2 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -162,7 +161,7 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
             sleep(50);
             idle();
         } */
-        relicTrackables.activate(); //activate before start button ispressed
+        relicTrackables.activate(); //activate before start button is pressed
 
         telemetry.addData(">", "Robot Ready.");    //
         telemetry.update();
@@ -192,12 +191,7 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-           // setUp();
-            //sleep(1500);
-            //stopIntake();
-            //grab();
-            //sleep(1000);
-            //liftUp();
+            openArms();
             moveOutCatchers();
             sleep(1500);
             armDown();
@@ -205,7 +199,6 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
             jewel();
             sleep(750);
             armUp();
-            gyroDrive(.10,2,0);
 
             /**
              * See if any of the instances of {@link relicTemplate} are currently visible.
@@ -230,14 +223,19 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
                 if(vuMark == RelicRecoveryVuMark.CENTER){
                     telemetry.addLine("Going Center"); //updated
 
-                    gyroDrive(0.10,24,0);
-                    gyroTurn(TURN_SPEED,-90);
+                    gyroDrive(0.10,24,0); //drive towards box
+                    gyroTurn(TURN_SPEED,-90); //turn right
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(DRIVE_SPEED,12,90);
+                    gyroDrive(DRIVE_SPEED,12,90);//drive towards center of the box
                     gyroTurn(TURN_SPEED,0);
                     gyroHold(TURN_SPEED,0,.5);
-                    gyroDrive(DRIVE_SPEED,12,0);
-                    release();
+                    gyroDrive(DRIVE_SPEED,12,0); //drive towards box
+                    scoreGlyph(); //score
+                    sleep(1000);
+                    stopIntake();
+                    gyroDrive(DRIVE_SPEED,-7,-90);//drive away from box
+                    gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
+                    gyroDrive(DRIVE_SPEED,-5,-90); //back out
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -246,12 +244,19 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addLine("Going Left");
 
-                    gyroDrive(.20,-27,0);
-                    gyroTurn(TURN_SPEED,-90);
+                    gyroDrive(0.10,24,0); //drive towards box
+                    gyroTurn(TURN_SPEED,-90); //turn right
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,10,90);
-                    release();
-                    gyroDrive(.10,-3,90);
+                    gyroDrive(DRIVE_SPEED,5,90);//drive towards left
+                    gyroTurn(TURN_SPEED,0);
+                    gyroHold(TURN_SPEED,0,.5);
+                    gyroDrive(DRIVE_SPEED,12,0); //drive towards box
+                    scoreGlyph();
+                    sleep(1000);
+                    stopIntake();
+                    gyroDrive(DRIVE_SPEED,-7,-90);//drive away from box
+                    gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
+                    gyroDrive(DRIVE_SPEED,-5,-90); //back out
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -260,12 +265,19 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addLine("Going Right");
 
-                    gyroDrive(.20,-42,0);
-                    gyroTurn(TURN_SPEED,-90);
+                    gyroDrive(0.10,24,0); //drive towards box
+                    gyroTurn(TURN_SPEED,-90); //turn right
                     gyroHold(TURN_SPEED,-90,.5);
-                    gyroDrive(.10,10,90);
-                    release();
-                    gyroDrive(.10,-3, 90);
+                    gyroDrive(DRIVE_SPEED,19,90); //drive towards right
+                    gyroTurn(TURN_SPEED,0);
+                    gyroHold(TURN_SPEED,0,.5);
+                    gyroDrive(DRIVE_SPEED,12,0); //drive towards right
+                    scoreGlyph();
+                    sleep(1000);
+                    stopIntake();
+                    gyroDrive(DRIVE_SPEED,-7,-90);//drive away from box
+                    gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
+                    gyroDrive(DRIVE_SPEED,-5,-90); //back out
 
                     telemetry.addData("Path", "Complete");
                     telemetry.update();
@@ -276,12 +288,19 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
                 telemetry.addData("VuMark", "not visible");
 
 
-                gyroDrive(.20,-28,0);
-                gyroTurn(TURN_SPEED,-90);
+                gyroDrive(0.10,24,0); //drive towards box
+                gyroTurn(TURN_SPEED,-90); //turn right
                 gyroHold(TURN_SPEED,-90,.5);
-                gyroDrive(.10,10,90);
-                release();
-                gyroDrive(.10,-3,90);
+                gyroDrive(DRIVE_SPEED,5,90); //drive towards the center
+                gyroTurn(TURN_SPEED,0); //face cryptobox
+                gyroHold(TURN_SPEED,0,.5);
+                gyroDrive(DRIVE_SPEED,12,0); //drive forward
+                scoreGlyph(); //score
+                sleep(1000);
+                stopIntake();
+                gyroDrive(DRIVE_SPEED,-7,-90);//drive away from box
+                gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
+                gyroDrive(DRIVE_SPEED,-5,-90); //back out
 
                 telemetry.addData("Path", "Complete");
                 telemetry.update();
@@ -510,9 +529,19 @@ public class VuforiaBlueTeam2 extends LinearOpMode {
         robot.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
+    public void openArms(){
+        robot.firstStage1.setPosition(.7); //glyph arms open
+        robot.firstStage2.setPosition(.7);
+    }
+
     public void moveOutCatchers() {
         robot.catcherLeft.setPosition(1);
         robot.catcherRight.setPosition(1);
+    }
+    public void scoreGlyph () {
+        robot.intakeRight.setPower(1);
+        robot.intakeLeft.setPower(1);
+        sleep(1000);
     }
 
     /**
