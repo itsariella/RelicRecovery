@@ -77,7 +77,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.PushbotHardware;
  */
 //hi
 @Autonomous(name="Gyro Test", group="Pushbot")
-
+@Disabled
 public class GyroStraight extends LinearOpMode {
 
     /* Declare OpMode members. */

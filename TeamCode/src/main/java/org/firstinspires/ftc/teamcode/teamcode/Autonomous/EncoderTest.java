@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.teamcode.Libraries.ConceptVuforiaNavigatio
  * Created by Ariella on 6/10/2017.
  */
 @Autonomous(name="Encoder Test", group="Pushbot")
-
+@Disabled
 public class EncoderTest extends AutoEncoder {
     @Override
     public void runOpMode() throws InterruptedException{

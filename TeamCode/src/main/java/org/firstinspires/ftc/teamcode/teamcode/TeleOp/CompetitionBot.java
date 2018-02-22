@@ -21,7 +21,6 @@ public class CompetitionBot extends OpMode {
     public DcMotor intakeRight;
     public DcMotor intakeLeft;
 
-
     public Servo firstStage1; //right?
     public Servo firstStage2; //left?
     public Servo arm;
@@ -104,7 +103,7 @@ public class CompetitionBot extends OpMode {
             z = 0;
 
         if(gamepad1.right_trigger > .1 && gamepad1.left_trigger >.1){
-            catcherLeft.setPosition(0);
+            catcherLeft.setPosition(0.02);
             catcherRight.setPosition(0.01);
         }
 
@@ -158,13 +157,9 @@ public class CompetitionBot extends OpMode {
             firstStage2.setPosition(1);
         }
 
-        if (gamepad2.left_trigger > 0.1) {
-            firstStage1.setPosition(0.9);
-            firstStage2.setPosition(0.9); // open glyph arms
-        }
-        if(gamepad2.left_bumper){
-            firstStage1.setPosition(.7); //glyph arms open
-            firstStage2.setPosition(.7);
+        if(gamepad2.left_trigger > 0.1){
+            firstStage1.setPosition(0); //glyph arms open
+            firstStage2.setPosition(0);
         }
 
         if (gamepad2.dpad_up) {

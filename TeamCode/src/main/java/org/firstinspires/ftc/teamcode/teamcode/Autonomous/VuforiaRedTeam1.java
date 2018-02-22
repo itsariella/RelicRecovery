@@ -238,7 +238,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
 
                     sleep(15000);
 
-                    telemetry.addData("Path", "Complete");
+                    telemetry.addData("Path Center", "Complete");
                     telemetry.update();
                 }
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
@@ -255,7 +255,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
                     gyroDrive(DRIVE_SPEED,-5,-90); //back out
 
-                    telemetry.addData("Path", "Complete");
+                    telemetry.addData("Path Left", "Complete");
                     telemetry.update();
                 }
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
@@ -272,7 +272,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                     gyroDrive(DRIVE_SPEED,9,-90); //push glyph back in
                     gyroDrive(DRIVE_SPEED,-5,-90); //back out
 
-                    telemetry.addData("Path", "Complete");
+                    telemetry.addData("Path Right", "Complete");
                     telemetry.update();
                 }
             }
@@ -487,8 +487,8 @@ public class VuforiaRedTeam1 extends LinearOpMode {
     }
 
     public void openArms(){
-        robot.firstStage1.setPosition(.7); //glyph arms open
-        robot.firstStage2.setPosition(.7);
+        robot.firstStage1.setPosition(.5); //glyph arms open
+        robot.firstStage2.setPosition(.5);
     }
 
     public void lift(int position){
