@@ -162,6 +162,11 @@ public class CompetitionBot extends OpMode {
             firstStage2.setPosition(0);
         }
 
+        if(gamepad2.left_bumper || gamepad2.right_bumper) {
+            firstStage2.setPosition(0.6);
+            firstStage1.setPosition(0.6);
+        }
+
         if (gamepad2.dpad_up) {
             catcherLeft.setPosition(0); // use catchers
             catcherRight.setPosition(0.01);

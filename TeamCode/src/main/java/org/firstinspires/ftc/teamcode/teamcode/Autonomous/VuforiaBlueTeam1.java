@@ -134,7 +134,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
-        telemetry.addData(">", "Calibrating GyroBlueTeam1");    //
+        telemetry.addData(">", "Calibrating GyroBlueTeam1, Please wait...");    //
         telemetry.update();
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -237,7 +237,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addLine("Going Left");
 
-                    gyroDrive(DRIVE_SPEED,-27,0);
+                    gyroDrive(DRIVE_SPEED,-28,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(0.1,8,90); //drive towards box
@@ -256,7 +256,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addLine("Going Right");
 
-                    gyroDrive(DRIVE_SPEED,-41,0);
+                    gyroDrive(DRIVE_SPEED,-42,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(DRIVE_SPEED,8,90); //drive towards box
@@ -276,7 +276,7 @@ public class VuforiaBlueTeam1 extends LinearOpMode {
             else {
                 telemetry.addData("VuMark", "not visible");
 
-                gyroDrive(DRIVE_SPEED,-28,0);
+                gyroDrive(DRIVE_SPEED,-35,0);
                 gyroTurn(TURN_SPEED,-90);
                 gyroHold(TURN_SPEED,-90,.5);
                 gyroDrive(DRIVE_SPEED,8,90); //drive towards box

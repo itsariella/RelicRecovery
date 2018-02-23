@@ -135,7 +135,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
         robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
-        telemetry.addData(">", "Calibrating GyroBlueTeam1");    //
+        telemetry.addData(">", "Calibrating GyroRedTeam1, Please wait...");    //
         telemetry.update();
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -168,9 +168,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.");    //
         telemetry.update();
 
-
         waitForStart();
-
 
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -244,7 +242,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addLine("Going Left");
 
-                    gyroDrive(DRIVE_SPEED,43,0);
+                    gyroDrive(DRIVE_SPEED,42,0);
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(DRIVE_SPEED,9,-90); //drive towards box
@@ -261,7 +259,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
                 else if(vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addLine("Going Right");
 
-                    gyroDrive(DRIVE_SPEED,26,0); //drive 26 inches
+                    gyroDrive(DRIVE_SPEED,28,0); //drive 26 inches
                     gyroTurn(TURN_SPEED,-90);
                     gyroHold(TURN_SPEED,-90,.5);
                     gyroDrive(DRIVE_SPEED,9,-90); //drive towards box
@@ -279,7 +277,7 @@ public class VuforiaRedTeam1 extends LinearOpMode {
             else {
                 telemetry.addData("VuMark", "not visible");
 
-                gyroDrive(DRIVE_SPEED,33,0);
+                gyroDrive(DRIVE_SPEED,35,0);
                 gyroTurn(TURN_SPEED,-90);
                 gyroHold(TURN_SPEED,-90,.5);
                 gyroDrive(DRIVE_SPEED,9,-90); //drive towards box
